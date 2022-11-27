@@ -3,6 +3,8 @@ import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-preprocessor";
 import { HardhatUserConfig, task } from "hardhat/config";
+import "@openzeppelin/hardhat-upgrades";
+import "hardhat-gas-reporter";
 
 import example from "./tasks/example";
 
@@ -23,7 +25,7 @@ const config: HardhatUserConfig = {
         version: "0.5.3",
         settings: {
           optimizer: {
-            enabled: true,
+            enabled: false,
             runs: 1000,
           },
         },
@@ -32,26 +34,25 @@ const config: HardhatUserConfig = {
         version: "0.6.12",
         settings: {
           optimizer: {
-            enabled: true,
+            enabled: false,
             runs: 1000,
           },
         },
       },
       {
-        version: "0.8.12",
+        version: "0.8.17",
         settings: {
           optimizer: {
-            enabled: true,
+            enabled: false,
             runs: 1000,
           },
         },
       },
     ],
   },
-
   paths: {
-    sources: "./src", // Use ./src rather than ./contracts as Hardhat expects
-    cache: "./cache_hardhat", // Use a different cache for Hardhat than Foundry
+    sources: "src", // Use ./src rather than ./contracts as Hardhat expects
+    cache: "cache_hardhat", // Use a different cache for Hardhat than Foundry
   },
   // This fully resolves paths for imports in the ./lib directory for Hardhat
   preprocess: {
@@ -67,6 +68,11 @@ const config: HardhatUserConfig = {
         return line;
       },
     }),
+  },
+  networks: {
+    hardhat: {
+      chainId: 1337,
+    },
   },
 };
 

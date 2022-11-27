@@ -1,5 +1,5 @@
 {
-  "name": "Ethernaut Solutions",
+  "name": "ethernaut-solutions",
   "version": "1.0.0",
   "description": "The harmony between Foundry and Hardhat.",
   "directories": {
@@ -7,7 +7,11 @@
     "test": "test"
   },
   "scripts": {
-    "test": "hardhat test"
+    "compile-hh": "yarn hardhat compile",
+    "test-hh": "hardhat test",
+    "test-f": "forge test",
+    "node-hh": "yarn hardhat node",
+    "deploy-hh": "yarn hardhat deploy"
   },
   "author": "Chirag Patil <chirag.eth1@protonmail.com>",
   "license": "Apache-2.0",
@@ -28,6 +32,7 @@
     "ethereumjs-util": "^7.1.5",
     "ethers": "^5.7.2",
     "hardhat": "^2.12.2",
+    "hardhat-gas-reporter": "^1.0.9",
     "hardhat-preprocessor": "^0.1.5",
     "openzeppelin-contracts-06": "npm:@openzeppelin/contracts@3.4.2",
     "openzeppelin-contracts-08": "npm:@openzeppelin/contracts@4.7.3",
