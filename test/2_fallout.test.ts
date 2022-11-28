@@ -6,7 +6,7 @@ describe("Fallout contract exploit", () => {
   async function deployFalloutFixture() {
     const [deployer, attacker] = await ethers.getSigners();
     const Fallout = await ethers.getContractFactory("Fallout");
-    const fallout = await Fallout.deploy();
+    const fallout = await Fallout.connect(deployer).deploy();
     return { attacker, fallout };
   }
 

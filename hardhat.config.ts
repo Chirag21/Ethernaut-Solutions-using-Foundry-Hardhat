@@ -69,9 +69,13 @@ const config: HardhatUserConfig = {
       },
     }),
   },
+  //defaultNetwork: "anvil",
   networks: {
     hardhat: {
       chainId: 1337,
+    },
+    anvil: {
+      url: "127.0.0.1:8545",
     },
   },
 };

