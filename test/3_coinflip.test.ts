@@ -2,8 +2,6 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { loadFixture } from "ethereum-waffle";
 import { BigNumber } from "ethers";
-import { resolve } from "path";
-import { assert } from "console";
 
 const FACTOR = BigNumber.from("57896044618658097711785492504343953926634992332820282019728792003956564819968");
 

