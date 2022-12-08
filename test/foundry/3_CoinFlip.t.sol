@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import "forge-std/Test.sol";
-import {CoinFlip} from "../../src/levels/CoinFlip.sol";
+import {CoinFlip} from "src/levels/CoinFlip.sol";
 
 pragma solidity 0.8.17;
 
