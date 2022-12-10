@@ -2,18 +2,21 @@
 
 import "forge-std/Test.sol";
 import {CoinFlip} from "src/levels/CoinFlip.sol";
+import {CoinFlipFactory} from "src/levels/CoinFlipFactory.sol";
 
 pragma solidity 0.8.17;
 
 contract CoinFlipTest is Test {
-    address attacker = address(0x123);
+    CoinFlip private coinFlip;
+    CoinFlipFactory private factory;
+    address private attacker = makeAddr("attacker");
     uint256 private constant FACTOR =
         57896044618658097711785492504343953926634992332820282019728792003956564819968;
 
-    CoinFlip private coinFlip;
-
     function setUp() public {
-        coinFlip = new CoinFlip();
+        factory = new CoinFlipFactory();
+
+        coinFlip = CoinFlip(factory.createInstance(attacker));
     }
 
     function testCoinFlipHack() external {
@@ -27,6 +30,9 @@ contract CoinFlipTest is Test {
         }
 
         assertEq(coinFlip.consecutiveWins(), 10, "Did not win consecutively");
+
+        // Verify solution using Ethernaut validation
+        factory.validateInstance(payable(address(coinFlip)), attacker);
         vm.stopPrank();
     }
 

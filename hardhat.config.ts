@@ -1,12 +1,16 @@
+require("dotenv").config();
 import fs from "fs";
-import "@nomiclabs/hardhat-waffle";
-import "@typechain/hardhat";
+import { HardhatUserConfig } from "hardhat/config";
+import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-preprocessor";
-import { HardhatUserConfig, task } from "hardhat/config";
 import "@openzeppelin/hardhat-upgrades";
-import "hardhat-gas-reporter";
+import "@nomicfoundation/hardhat-chai-matchers";
+import "hardhat-contract-sizer";
 
-import example from "./tasks/example";
+export const PRIVATE_KEY = process.env.PRIVATE_KEY;
+export const ANVIL_ACCOUNT_PRIVATE_KEY = process.env.ANVIL_ACCOUNT_PRIVATE_KEY;
+export const POLYGON_TESTNET_RPC_URL = process.env.POLYGON_TESTNET_RPC_URL || "https://rpc.ankr.com/polygon_mumbai";
+export const BLOCK_EXPLORER_URL = "https://mumbai.polygonscan.com/tx";
 
 function getRemappings() {
   return fs
@@ -15,9 +19,6 @@ function getRemappings() {
     .filter(Boolean)
     .map((line) => line.trim().split("="));
 }
-
-task("example", "Example task").setAction(example);
-
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
@@ -53,7 +54,7 @@ const config: HardhatUserConfig = {
   paths: {
     sources: "src", // Use ./src rather than ./contracts as Hardhat expects
     cache: "cache_hardhat", // Use a different cache for Hardhat than Foundry
-    tests:"test/hardhat" 
+    tests: "test/hardhat",
   },
   // This fully resolves paths for imports in the ./lib directory for Hardhat
   preprocess: {
@@ -70,15 +71,39 @@ const config: HardhatUserConfig = {
       },
     }),
   },
-  //defaultNetwork: "anvil",
   networks: {
     hardhat: {
       chainId: 1337,
+      forking: {
+        url: POLYGON_TESTNET_RPC_URL,
+        enabled: true,
+        blockNumber: 29385384,
+      },
+      loggingEnabled: true,
+    },
+    localhost: {
+      chainId: 1337,
+      loggingEnabled: true,
+      forking: {
+        url: POLYGON_TESTNET_RPC_URL,
+        enabled: false,
+        blockNumber: 29385384,
+      },
+    },
+    mumbai: {
+      chainId: 80001,
+      url: POLYGON_TESTNET_RPC_URL,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      loggingEnabled: true,
     },
     anvil: {
-      url: "127.0.0.1:8545",
+      url: "http://127.0.0.1:8545/",
+      accounts: ANVIL_ACCOUNT_PRIVATE_KEY !== undefined ? [ANVIL_ACCOUNT_PRIVATE_KEY] : [],
+
+      loggingEnabled: true,
     },
   },
+  defaultNetwork: "hardhat",
 };
 
 export default config;
