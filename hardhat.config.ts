@@ -8,9 +8,10 @@ import "@nomicfoundation/hardhat-chai-matchers";
 import "hardhat-contract-sizer";
 
 export const PRIVATE_KEY = process.env.PRIVATE_KEY;
-export const ANVIL_ACCOUNT_PRIVATE_KEY = process.env.ANVIL_ACCOUNT_PRIVATE_KEY;
+export const ANVIL_PRIVATE_KEY = process.env.ANVIL_PRIVATE_KEY;
 export const POLYGON_TESTNET_RPC_URL = process.env.POLYGON_TESTNET_RPC_URL || "https://rpc.ankr.com/polygon_mumbai";
 export const BLOCK_EXPLORER_URL = "https://mumbai.polygonscan.com/tx";
+export const devNetworks = ["localhost", "hardhat"];
 
 function getRemappings() {
   return fs
@@ -97,8 +98,9 @@ const config: HardhatUserConfig = {
       loggingEnabled: true,
     },
     anvil: {
+      chainId: 169,
       url: "http://127.0.0.1:8545/",
-      accounts: ANVIL_ACCOUNT_PRIVATE_KEY !== undefined ? [ANVIL_ACCOUNT_PRIVATE_KEY] : [],
+      accounts: ANVIL_PRIVATE_KEY !== undefined ? [ANVIL_PRIVATE_KEY] : [],
 
       loggingEnabled: true,
     },

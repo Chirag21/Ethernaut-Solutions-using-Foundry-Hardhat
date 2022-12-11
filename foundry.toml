@@ -15,3 +15,10 @@ remapping = [
                 'openzeppelin-contracts-08/=node_modules/openzeppelin-contracts-08/'
     ]
 via_ir = false
+fs_permissions = [{ access = "read", path = "./out"}]
+
+
+[rpc_endpoints]
+localhost = '${LOCALHOST}'
+mumbai = '${POLYGON_TESTNET_RPC_URL}'
+goerli = '${GOERLI_TESTNET_RPC_URL}'
