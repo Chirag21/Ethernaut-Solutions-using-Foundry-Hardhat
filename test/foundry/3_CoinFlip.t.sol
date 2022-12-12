@@ -24,8 +24,7 @@ contract CoinFlipTest is Test {
 
         for (uint256 i = 0; i < 10; i++) {
             bool guess = computeGuess();
-            bool success = coinFlip.flip(guess);
-            if (!success) fail("Failed to guess the side");
+            coinFlip.flip(guess);
             vm.roll(block.number + 1);
         }
 

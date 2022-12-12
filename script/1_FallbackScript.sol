@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
 import "forge-std/Script.sol";
 import "src/levels/Fallback.sol";
 
-contract FallbackScript is Script {
+contract HackFallbackScript is Script {
     error FallbackScript_CallFailed();
 
     function run() external {

@@ -10,7 +10,7 @@ interface IFallout {
     function owner() external view returns (address);
 }
 
-contract FalloutScript is Script {
+contract HackFalloutScript is Script {
     function run() external {
         IFallout fallout = IFallout(vm.envAddress("FALLOUT_ADDRESS"));
         uint256 deployerKey = vm.envUint("PRIVATE_KEY");
