@@ -1,20 +1,19 @@
 {
   "name": "ethernaut-solutions",
   "version": "1.0.0",
-  "description": "The harmony between Foundry and Hardhat.",
+  "description": "Ethernaut solutions using Foundry and Hardhat.",
   "directories": {
     "lib": "lib",
     "test": "test"
   },
   "scripts": {
-    "compile:hh": "yarn hardhat compile",
-    "test:hh": "hardhat test",
-    "test:f": "forge test",
-    "node:hh": "yarn hardhat node",
-    "deploy:hh": "yarn hardhat deploy",
-    "run:hh": "pnpm hardhat run"
+    "compile": "yarn hardhat compile",
+    "test": "hardhat test",
+    "node": "yarn hardhat node",
+    "deploy": "yarn hardhat deploy",
+    "run": "pnpm hardhat run"
   },
-  "author": "Chirag Patil <chirag.eth1@protonmail.com>",
+  "author": "Chirag Patil <chirag.eth@protonmail.com>",
   "license": "Apache-2.0",
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
@@ -28,11 +27,11 @@
     "@openzeppelin/contracts-upgradeable": "^4.8.0",
     "@openzeppelin/hardhat-upgrades": "^1.21.0",
     "@openzeppelin/test-helpers": "^0.5.16",
-    "@typechain/ethers-v5": "^10.1.1",
-    "@typechain/hardhat": "^6.1.4",
+    "@typechain/ethers-v5": "10.2.0",
+    "@typechain/hardhat": "6.1.5",
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
-    "@types/node": "18.11.13",
+    "@types/node": "18.11.14",
     "chai": "^4.3.7",
     "dotenv": "^16.0.3",
     "ethereumjs-util": "^7.1.5",
