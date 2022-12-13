@@ -1,4 +1,4 @@
-# <h1 align="center"> Ethernaut Solutions </h1>
+# <h1 align="center"> Ethernaut Solutions [Foundry - Hardhat]</h1>
 
 ### _Never place private keys or secret phrase or mnemonic in a .env file that is associated with real funds. Only place private keys in a .env file that have ONLY testnet ETH, LINK, or other cryptocurrencies._
 
