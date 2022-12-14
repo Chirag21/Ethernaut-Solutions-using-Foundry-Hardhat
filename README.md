@@ -43,10 +43,10 @@ forge install
     
 - Using Hardhat
     - ```
-      pnpm test [testFilePath]
+      pnpm run test [testFilePath]
       ```
 
-    eg. ```pnpm test test/hardhat/2_fallout.test.ts```
+    eg. ```pnpm run test test/hardhat/2_fallout.test.ts```
 
     Add `--no-compile` for fast compilation.
     
