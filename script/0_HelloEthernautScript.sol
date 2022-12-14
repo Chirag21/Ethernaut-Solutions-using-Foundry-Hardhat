@@ -15,7 +15,7 @@ contract HackHelloEthernautScript is Script {
         IInstance instance = IInstance(
             vm.envAddress("HELLO_ETHERNAUT_ADDRESS")
         );
-        uint256 deployerPrivatekey = vm.envUint("PRIVATE_KEY");
+        uint256 deployerPrivatekey = vm.envUint("TESTNET_PRIVATE_KEY_1");
         vm.startBroadcast(deployerPrivatekey);
         string memory password = instance.password();
         instance.authenticate(password);

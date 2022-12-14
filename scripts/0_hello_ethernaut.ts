@@ -1,5 +1,5 @@
 import hre, { ethers } from "hardhat";
-import { BLOCK_EXPLORER_URL } from "../hardhat.config";
+import { BLOCK_EXPLORER_URL, developmentNetworks } from "../hardhat.config";
 
 async function helloEthernaut() {
   const helloEthernautInstanceAddress = process.env.HELLO_ETHERNAUT_ADDRESS!;
@@ -8,7 +8,10 @@ async function helloEthernaut() {
   const instance = await ethers.getContractAt("Instance", helloEthernautInstanceAddress);
   const password = await instance.password();
   const tx = await instance.connect(attacker).authenticate(password);
-  console.log(`${BLOCK_EXPLORER_URL}/${tx.hash}`);
+
+  if (ethers.provider.network.name in developmentNetworks)
+    console.log(`Transaction hash : ${BLOCK_EXPLORER_URL}/${tx.hash}`);
+
   await tx.wait();
   console.log("SUCCESS!!! Submit the instance");
 }

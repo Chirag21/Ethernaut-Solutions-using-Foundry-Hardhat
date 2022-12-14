@@ -4,14 +4,15 @@
   "description": "Ethernaut solutions using Foundry and Hardhat.",
   "directories": {
     "lib": "lib",
-    "test": "test"
+    "test": "test",
+    "src": "src"
   },
   "scripts": {
-    "compile": "yarn hardhat compile",
-    "test": "hardhat test",
-    "node": "yarn hardhat node",
-    "deploy": "yarn hardhat deploy",
-    "run": "pnpm hardhat run"
+    "compile": "pnpm hardhat compile",
+    "test": "pnpm hardhat test",
+    "node": "pnpm hardhat node",
+    "deploy": "pnpm hardhat deploy",
+    "script": "pnpm hardhat run"
   },
   "author": "Chirag Patil <chirag.eth@protonmail.com>",
   "license": "Apache-2.0",
@@ -31,7 +32,7 @@
     "@typechain/hardhat": "6.1.5",
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
-    "@types/node": "18.11.14",
+    "@types/node": "18.11.15",
     "chai": "^4.3.7",
     "dotenv": "^16.0.3",
     "ethereumjs-util": "^7.1.5",
