@@ -19,5 +19,6 @@ contract HackFallbackScript is Script {
         if (!success) revert FallbackScript_CallFailed();
         instance.withdraw();
         vm.stopBroadcast();
+        console.log("SUCCESS!!! Submit the instance.");
     }
 }

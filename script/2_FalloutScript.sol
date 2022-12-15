@@ -17,5 +17,6 @@ contract HackFalloutScript is Script {
         vm.startBroadcast(deployerKey);
         fallout.Fal1out();
         vm.stopBroadcast();
+        console.log("SUCCESS!!! Submit the instance.");
     }
 }

@@ -26,5 +26,6 @@ contract HackCoinFlipScript is Script {
         console.log(coinFlip.consecutiveWins());
 
         vm.stopBroadcast();
+        console.log("SUCCESS!!! Submit the instance.");
     }
 }

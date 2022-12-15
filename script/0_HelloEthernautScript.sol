@@ -20,5 +20,6 @@ contract HackHelloEthernautScript is Script {
         string memory password = instance.password();
         instance.authenticate(password);
         vm.stopBroadcast();
+        console.log("SUCCESS!!! Submit the instance.");
     }
 }

@@ -18,8 +18,8 @@ contract TelephoneScript is Script {
         ITelephone telephone = ITelephone(vm.envAddress("TELEPHONE_ADDRESS"));
         uint256 deployerKey = vm.envUint("TESTNET_PRIVATE_KEY_2");
         vm.startBroadcast(deployerKey);
-        emit Owner(telephone.owner());
         telephone.changeOwner(vm.envAddress("TESTNET_ADDRESS_1"));
-        emit Owner(telephone.owner());
+        vm.stopBroadcast();
+        console.log("SUCCESS!!! Submit the instance.");
     }
 }
