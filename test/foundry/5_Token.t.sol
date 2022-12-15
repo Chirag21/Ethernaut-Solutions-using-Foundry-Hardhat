@@ -47,6 +47,7 @@ contract TokenTest is Test {
         token.transfer(attacker2, type(uint).max - 5);
         uint256 attacker2Balance = token.balanceOf(attacker2);
         assertGt(attacker2Balance, playerSupply, "Test Failed!");
+        tokenFactory.validateInstance(payable(address(token)), attacker);
         vm.stopPrank();
     }
 }
