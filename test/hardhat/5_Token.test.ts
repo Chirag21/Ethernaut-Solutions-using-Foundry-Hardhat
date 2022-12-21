@@ -7,7 +7,7 @@ const SUPPLY = 21000000;
 const PLAYER_SUPPLY = 20;
 const AMOUNT_TO_TRANSFER = "21";
 
-describe("Hack Token contract", () => {
+describe("Token exploit", () => {
   async function deployTokenFixture() {
     const [deployer, attacker, toAddress] = await ethers.getSigners();
     const Token = await ethers.getContractFactory("Token");

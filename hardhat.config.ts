@@ -88,11 +88,11 @@ const config: HardhatUserConfig = {
     localhost: {
       chainId: 1337,
       loggingEnabled: true,
-      forking: {
-        url: POLYGON_TESTNET_RPC_URL,
-        enabled: false,
-        blockNumber: 29385384,
-      },
+      // forking: {
+      //   url: POLYGON_TESTNET_RPC_URL,
+      //   enabled: false,
+      //   blockNumber: 29385384,
+      // },
     },
     mumbai: {
       chainId: 80001,

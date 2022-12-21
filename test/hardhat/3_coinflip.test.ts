@@ -5,7 +5,7 @@ import { BigNumber } from "ethers";
 
 const FACTOR = BigNumber.from("57896044618658097711785492504343953926634992332820282019728792003956564819968");
 
-describe("CoinFlip hack", () => {
+describe("CoinFlip exploit", () => {
   async function deployCoinFlipFixture() {
     const [deployer, attacker] = await ethers.getSigners();
     const CoinFlip = await ethers.getContractFactory("CoinFlip");

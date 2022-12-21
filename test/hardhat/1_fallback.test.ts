@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { ethers } from "hardhat";
 
-describe("Fallback contract exploit", () => {
+describe("Fallback exploit", () => {
   async function deployFallbackFixture() {
     const [deployer, attacker] = await ethers.getSigners();
     const Fallback = await ethers.getContractFactory("Fallback");

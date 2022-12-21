@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-describe("Telephone contract exploit", () => {
+describe("Telephone exploit", () => {
   async function deployTelephoneFixture() {
     const [deployer, attacker] = await ethers.getSigners();
 

@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-describe("Fallout contract exploit", () => {
+describe("Fallout exploit", () => {
   async function deployFalloutFixture() {
     const [deployer, attacker] = await ethers.getSigners();
     const Fallout = await ethers.getContractFactory("Fallout");
