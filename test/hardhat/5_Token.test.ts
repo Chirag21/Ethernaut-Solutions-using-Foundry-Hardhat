@@ -2,9 +2,6 @@ import { ethers } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 
-// From TokenFactory contract
-const SUPPLY = 21000000;
-const PLAYER_SUPPLY = 20;
 const AMOUNT_TO_TRANSFER = "21";
 
 describe("Token exploit", () => {
