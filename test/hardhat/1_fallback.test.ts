@@ -5,13 +5,23 @@ import { ethers } from "hardhat";
 describe("Fallback exploit", () => {
   async function deployFallbackFixture() {
     const [deployer, attacker] = await ethers.getSigners();
-    const Fallback = await ethers.getContractFactory("Fallback");
-    const fallback = await Fallback.connect(deployer).deploy();
-    return { deployer, attacker, fallback };
+    const FallbackFactory = await ethers.getContractFactory("FallbackFactory");
+    const fallbackFactory = await FallbackFactory.connect(deployer).deploy();
+
+    // Simulate execution of createInstance to get return value of the function(address of deployed instance)
+    const fallbackAddress = await fallbackFactory.callStatic.createInstance(deployer.address);
+
+    const tx = await fallbackFactory.createInstance(attacker.address);
+    await tx.wait();
+
+    // Load the instance at returned address
+    const fallback = await ethers.getContractAt("Fallback", fallbackAddress);
+
+    return { deployer, attacker, fallback, fallbackFactory };
   }
 
   it("Should drain the contract", async () => {
-    const { deployer, attacker, fallback } = await loadFixture(deployFallbackFixture);
+    const { deployer, attacker, fallback, fallbackFactory } = await loadFixture(deployFallbackFixture);
 
     // Add contribution to the contract
     let tx = await fallback.connect(deployer).contribute({
@@ -48,6 +58,10 @@ describe("Fallback exploit", () => {
 
     const attackerBalanceAfterAttack = await attacker.getBalance();
     const increment = attackerBalanceAfterAttack.sub(attackerBalanceBeforeAttack);
+
+    // Validate instance using Ethernaut validation
+    const success = await fallbackFactory.validateInstance(fallback.address, attacker.address);
+    expect(success).to.be.true;
 
     // The increment in attacker's balance should be greater than contributions
     //expect(increment.gt(attackerContribution)).to.be.true;

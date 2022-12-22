@@ -11,10 +11,10 @@ describe("Delegation exploit", () => {
     const DelegationFactory = await ethers.getContractFactory("DelegationFactory");
     const delegationFactory = await DelegationFactory.connect(deployer).deploy();
 
-    // Simulate createInstance to get return value of the function
+    // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const delegationAddress = await delegationFactory.connect(deployer).callStatic.createInstance(attacker.address);
 
-    const tx = await delegationFactory.connect(deployer).createInstance(attacker.address);
+    const tx = await delegationFactory.createInstance(attacker.address);
     await tx.wait();
 
     const delegation = await ethers.getContractAt("Delegation", delegationAddress);
@@ -47,9 +47,10 @@ describe("Delegation exploit", () => {
 
     console.log("------------------------------------------------------- newOWner : ", newOwner);
 
-    // Check if the owner is set.
+    //expect(newOwner).to.be.equal(attacker.address, "Failed!!!");
+
+    // Validate instance using Ethernaut validation
     const success = await delegationFactory.validateInstance(delegation.address, attacker.address);
     expect(success).to.equal(true, "Delegation Failed!!!");
-    //expect(newOwner).to.be.equal(attacker.address, "Failed!!!");
   });
 });

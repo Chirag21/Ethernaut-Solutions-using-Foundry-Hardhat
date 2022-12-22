@@ -8,13 +8,23 @@ const FACTOR = BigNumber.from("5789604461865809771178549250434395392663499233282
 describe("CoinFlip exploit", () => {
   async function deployCoinFlipFixture() {
     const [deployer, attacker] = await ethers.getSigners();
-    const CoinFlip = await ethers.getContractFactory("CoinFlip");
-    const coinFlip = await CoinFlip.connect(deployer).deploy();
-    return { attacker, coinFlip };
+    const CoinFlipFactory = await ethers.getContractFactory("CoinFlipFactory");
+    const coinFlipFactory = await CoinFlipFactory.connect(deployer).deploy();
+
+    // Simulate execution of createInstance to get return value of the function(address of deployed instance)
+    const coinFlipAddress = await coinFlipFactory.callStatic.createInstance(attacker.address);
+
+    const tx = await coinFlipFactory.createInstance(attacker.address);
+    await tx.wait();
+
+    // Load the instance at returned address
+    const coinFlip = await ethers.getContractAt("CoinFlip", coinFlipAddress);
+
+    return { attacker, coinFlip, coinFlipFactory };
   }
 
   it("Should guess the correct outcome 10 times in a row", async () => {
-    const { attacker, coinFlip } = await loadFixture(deployCoinFlipFixture);
+    const { attacker, coinFlip, coinFlipFactory } = await loadFixture(deployCoinFlipFixture);
 
     for (let i = 0; i < 10; i++) {
       const guess = await computeGuess();
@@ -23,6 +33,10 @@ describe("CoinFlip exploit", () => {
     }
 
     expect(await coinFlip.consecutiveWins()).to.be.equal("10", "Did not win consecutively");
+
+    // Validate instance using Ethernaut validation
+    const success = await coinFlipFactory.validateInstance(coinFlip.address, attacker.address);
+    expect(success).to.be.true;
   });
 });
 
