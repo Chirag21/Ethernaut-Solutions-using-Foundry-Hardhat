@@ -20,6 +20,8 @@ contract VaultScript is Script {
 
         // Unlock the vault using password
         vault.unlock(password);
+
         vm.stopBroadcast();
+        console.log("SUCCESS!!! Submit the instance.");
     }
 }

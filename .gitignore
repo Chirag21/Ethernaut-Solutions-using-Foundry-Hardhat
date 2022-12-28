@@ -23,9 +23,10 @@ out
 reference-working
 
 # Ignores development broadcast logs
-broadcast
+broadcast/*
 !/broadcast
 /broadcast/*/31337/
+/broadcast/*/80001/
 /broadcast/**/dry-run/
 
 # Dotenv file

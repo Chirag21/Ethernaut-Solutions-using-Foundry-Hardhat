@@ -10,7 +10,7 @@
 The repo includes Ethernaut solutions built with Hardhat and Foundry. The `src/` folder contains the Ethernaut level contracts. The tests for the exploits are present in the `test/` folder. `script` and `scripts` folder contain the scripts that can be run on the testnet. These scripts carry out the exploitation.
 Note that the `script/` folder contains scripts for Foundry, written in Solidity, while the `scripts/` folder contains scripts for Hardhat, written in Typescript.
 ### Install
-- [Install Node.js](https://nodejs.org/en/)
+- [Install Node.js](https://nodejs.org/en/) (Use Node.js 18.12.x)
 
 - [Install pnpm](https://pnpm.io/installation)
 
@@ -43,10 +43,10 @@ forge install
     
 - Using Hardhat
     - ```
-      pnpm run test [testFilePath]
+      pnpm testhh [testFilePath]
       ```
 
-    eg. ```pnpm run test test/hardhat/2_fallout.test.ts```
+    eg. ```pnpm testhh test/hardhat/2_fallout.test.ts```
 
     Add `--no-compile` for fast compilation.
     
@@ -62,7 +62,7 @@ anvil --chain-id 169
 ```
 To fork the testnet
 ```
-anvil --chain-id 169 --fork-url [yourRPCUrl] --fork-block-number [blockNumberToForkFrom]
+anvil --chain-id 169 --fork-url [RPCUrl] --fork-block-number [blockNumberToForkFrom]
 ```
 Copy the Anvil private key and paste it into the `.env` file against `"ANVIL_PRIVATE_KEY."`
 
@@ -105,13 +105,13 @@ Execute the exploit on testnet (__Remember to use `"PRIVATE_KEY"` from `.env`__.
 
 - Using Hardhat
     - ```
-      pnpm run scripts/2_fallout_exploit.ts --no-compile --network [networkName]
+      pnpm run scripts/2_fallout_exploit.ts --network [networkName]
       ```
       
     - Add network from `hardhat.config.ts`
     
     eg. ```
-      pnpm run scripts/2_fallout_exploit.ts --no-compile --network mumbai
+      pnpm run scripts/2_fallout_exploit.ts --network mumbai
       ```
 ---
 

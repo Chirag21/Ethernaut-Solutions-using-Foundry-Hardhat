@@ -9,7 +9,7 @@ import {ForceHack} from "src/test/ForceHack.sol";
 
 contract ForceTest is Test {
     ForceFactory private forceFactory;
-    ForceHack forceHack;
+    ForceHack private forceHack;
     address private attacker = makeAddr("attacker");
     address forceAddress;
 

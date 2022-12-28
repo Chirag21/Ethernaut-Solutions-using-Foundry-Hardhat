@@ -9,7 +9,7 @@ import {Vault} from "src/levels/Vault.sol";
 contract VaultTest is Test {
     VaultFactory private vaultFactory;
     Vault private vault;
-    address attacker = makeAddr("attacker");
+    address private attacker = makeAddr("attacker");
 
     function setUp() external {
         vaultFactory = new VaultFactory();

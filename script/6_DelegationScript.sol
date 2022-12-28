@@ -35,5 +35,6 @@ contract DelegationScript is Script {
         emit Owner(IDelegation(delegationAddress).owner());
 
         vm.stopBroadcast();
+        console.log("SUCCESS!!! Submit the instance.");
     }
 }
