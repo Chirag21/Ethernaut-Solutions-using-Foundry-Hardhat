@@ -16,7 +16,7 @@ contract KingScript is Script {
     function run() external {
         address kingContractAddress = vm.envAddress("KING_ADDRESS");
         King king = King(payable(kingContractAddress));
-        uint256 attackerKey = vm.envUint("TESTNET_PRIVATE_KEY_2");
+        uint256 attackerKey = vm.envUint("TESTNET_PRIVATE_KEY_1");
 
         vm.startBroadcast(attackerKey);
 
