@@ -30,6 +30,6 @@ contract ForceTest is Test {
         );
 
         // Assert Force's contract balance is greater than zero.
-        assertTrue(success, "Exploit Failed!!!");
+        assertTrue(success, "Validation Failed!!!");
     }
 }

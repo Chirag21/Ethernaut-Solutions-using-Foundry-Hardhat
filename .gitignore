@@ -36,3 +36,5 @@ broadcast/*
 yarn-error.log
 
 commands.txt
+
+*.txt

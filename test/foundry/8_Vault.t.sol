@@ -27,13 +27,13 @@ contract VaultTest is Test {
         // test
         // Assert that 'locked' is set to false
         bool locked = vault.locked();
-        assertFalse(locked, "Unlocking Vault Failed!!!_1");
+        assertFalse(locked, "Unlocking Vault Failed!!!");
 
         // Validate the instance using Ethernaut validation.
         bool success = vaultFactory.validateInstance(
             payable(address(vault)),
             attacker
         );
-        assertTrue(success, "Unlocking Vault Failed!!!_2");
+        assertTrue(success, "Validation Failed!!!");
     }
 }

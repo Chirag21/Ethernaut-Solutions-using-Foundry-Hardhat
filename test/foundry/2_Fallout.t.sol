@@ -11,12 +11,9 @@ interface IFallout {
 }
 
 interface IFalloutFactory {
-    function createInstance(address _player) external payable returns (address);
+    function createInstance(address) external payable returns (address);
 
-    function validateInstance(
-        address payable _instance,
-        address _player
-    ) external returns (bool);
+    function validateInstance(address payable, address) external returns (bool);
 }
 
 contract FalloutTest is Test {

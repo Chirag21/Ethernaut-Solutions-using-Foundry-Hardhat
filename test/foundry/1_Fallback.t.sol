@@ -73,7 +73,9 @@ contract FallbackTest is Test {
         );
 
         // Verify solution using Ethernaut validation
-        factory.validateInstance(payable(level_1), attacker);
+        success = factory.validateInstance(payable(level_1), attacker);
+        assertTrue(success, "Validation Failed!!!");
+
         vm.stopPrank();
     }
 }

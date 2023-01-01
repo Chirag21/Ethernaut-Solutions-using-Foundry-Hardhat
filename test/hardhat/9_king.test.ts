@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 
 const INSERT_COIN = ethers.utils.parseEther("0.001");
 
-describe("", () => {
+describe("King exploit", () => {
   async function deployKingFixture() {
     const [deployer, attacker] = await ethers.getSigners();
     const KingFactory = await ethers.getContractFactory("KingFactory");
@@ -26,7 +26,7 @@ describe("", () => {
     return { attacker, kingFactory, king, kingHack };
   }
 
-  it("Stop level from claiming kingship", async () => {
+  it("Should stop level from claiming kingship", async () => {
     const { attacker, kingFactory, king, kingHack } = await loadFixture(deployKingFixture);
 
     // Perform hack. This causes the KingHack contract to assume kingship of the King contract.

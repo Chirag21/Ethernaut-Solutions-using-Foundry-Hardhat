@@ -4,9 +4,9 @@ pragma solidity ^0.8.17;
 import "forge-std/Script.sol";
 
 interface IToken {
-    function transfer(address _to, uint _value) external returns (bool);
+    function transfer(address, uint256) external returns (bool);
 
-    function balanceOf(address _owner) external view returns (uint balance);
+    function balanceOf(address) external view returns (uint256);
 }
 
 contract TokenScript is Script {
