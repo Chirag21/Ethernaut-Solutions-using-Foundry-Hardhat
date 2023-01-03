@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
 import {IReentrance} from "src/test/interfaces/IReentrance.sol";
 
 contract ReentranceHack {
-    IReentrance public reentrance;
+    IReentrance private immutable reentrance;
 
     constructor(address _reentrance) {
         // Load Reentrance contract instance using interface
