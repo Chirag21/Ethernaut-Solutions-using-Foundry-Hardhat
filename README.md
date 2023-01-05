@@ -7,7 +7,7 @@
 *__The Ethernaut is a Web3/Solidity based wargame inspired by [overthewire](https://overthewire.org), played in the Ethereum Virtual Machine. The game acts both as a tool for those interested in learning ethereum, and as a way to catalogue historical hacks as levels. Level contracts are taken from [Ethernaut's repo.](https://github.com/OpenZeppelin/ethernaut)__*
 
 
-###*You  can read the Ethernaut CTF writeups [here](https://medium.com/@0xcsp/list/ethernaut-solutions-and-walkthrough-foundry-hardhat-585520fff8ad).*
+### *You  can read the Ethernaut CTF writeups [here](https://medium.com/@0xcsp/list/ethernaut-solutions-and-walkthrough-foundry-hardhat-585520fff8ad).*
 
 ### Getting Started
 The repo includes Ethernaut solutions built with Hardhat and Foundry. The `src/` folder contains the Ethernaut level contracts. The tests for the exploits are present in the `test/` folder. `script` and `scripts` folder contain the scripts that can be run on the testnet. These scripts carry out the exploitation.
