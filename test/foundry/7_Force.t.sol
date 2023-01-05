@@ -5,13 +5,13 @@ pragma solidity ^0.8.17;
 import "forge-std/Test.sol";
 import {ForceFactory} from "src/levels/ForceFactory.sol";
 import {Force} from "src/levels/Force.sol";
-import {ForceHack} from "src/test/ForceHack.sol";
+import {ForceHack} from "src/hack/ForceHack.sol";
 
 contract ForceTest is Test {
     ForceFactory private forceFactory;
     ForceHack private forceHack;
     address private attacker = makeAddr("attacker");
-    address forceAddress;
+    address private forceAddress;
 
     function setUp() external {
         forceFactory = new ForceFactory();

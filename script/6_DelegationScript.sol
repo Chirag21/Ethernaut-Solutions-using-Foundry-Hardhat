@@ -3,14 +3,8 @@
 pragma solidity ^0.8.1;
 
 import "forge-std/Script.sol";
-
-interface IDelegate {
-    function pwn() external;
-}
-
-interface IDelegation {
-    function owner() external returns (address);
-}
+import {IDelegate} from "src/hack/interfaces/IDelegate.sol";
+import {IDelegation} from "src/hack/interfaces/IDelegation.sol";
 
 contract DelegationScript is Script {
     event Owner(address);
@@ -35,6 +29,6 @@ contract DelegationScript is Script {
         emit Owner(IDelegation(delegationAddress).owner());
 
         vm.stopBroadcast();
-        console.log("SUCCESS!!! Submit the instance.");
+        console2.log("SUCCESS!!! Submit the instance.");
     }
 }

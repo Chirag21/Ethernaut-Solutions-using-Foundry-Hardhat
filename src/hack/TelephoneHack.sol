@@ -2,9 +2,7 @@
 
 pragma solidity ^0.8.17;
 
-interface ITelephone {
-    function changeOwner(address) external;
-}
+import {ITelephone} from "src/hack/interfaces/ITelephone.sol";
 
 contract TelephoneHack {
     ITelephone private telephone;

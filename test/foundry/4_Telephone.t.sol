@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
 import "forge-std/Test.sol";
 import {TelephoneFactory} from "src/levels/TelephoneFactory.sol";
 import {Telephone} from "src/levels/Telephone.sol";
-import {TelephoneHack} from "src/test/TelephoneHack.sol";
+import {TelephoneHack} from "src/hack/TelephoneHack.sol";
 
 contract TelephoneTest is Test {
     TelephoneHack private telephoneHack;

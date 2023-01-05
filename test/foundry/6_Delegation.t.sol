@@ -5,10 +5,7 @@ pragma solidity ^0.8.17;
 import "forge-std/Test.sol";
 import {DelegationFactory} from "src/levels/DelegationFactory.sol";
 import {Delegation} from "src/levels/Delegation.sol";
-
-interface IDelegate {
-    function pwn() external;
-}
+import {IDelegate} from "src/hack/interfaces/IDelegate.sol";
 
 contract DelegationTest is Test {
     DelegationFactory private factory;

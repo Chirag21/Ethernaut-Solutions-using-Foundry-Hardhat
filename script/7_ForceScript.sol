@@ -3,7 +3,7 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
-import {ForceHack} from "src/test/ForceHack.sol";
+import {ForceHack} from "src/hack/ForceHack.sol";
 
 contract ForceScript is Script {
     function run() external {
@@ -17,6 +17,6 @@ contract ForceScript is Script {
         new ForceHack{value: 1 wei}(payable(force));
 
         vm.stopBroadcast();
-        console.log("SUCCESS!!! Submit the instance.");
+        console2.log("SUCCESS!!! Submit the instance.");
     }
 }

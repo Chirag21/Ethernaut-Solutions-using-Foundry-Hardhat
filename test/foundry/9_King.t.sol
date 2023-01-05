@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
 import "forge-std/Test.sol";
 import {King} from "src/levels/King.sol";
 import {KingFactory} from "src/levels/KingFactory.sol";
-import {KingHack} from "src/test/KingHack.sol";
+import {KingHack} from "src/hack/KingHack.sol";
 
 contract KingTest is Test {
     KingFactory private kingFactory;

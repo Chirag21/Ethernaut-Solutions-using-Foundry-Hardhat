@@ -3,37 +3,43 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Test.sol";
-
-interface IFallout {
-    function Fal1out() external;
-
-    function owner() external view returns (address);
-}
-
-interface IFalloutFactory {
-    function createInstance(address) external payable returns (address);
-
-    function validateInstance(address payable, address) external returns (bool);
-}
+import {IFallout} from "src/hack/interfaces/IFallout.sol";
+import {Level as FalloutFactory} from "src/levels/base/Level.sol";
 
 contract FalloutTest is Test {
     IFallout private fallout;
-    IFalloutFactory private factory;
+    FalloutFactory private falloutFactory;
     address private attacker = makeAddr("attacker");
 
     function setUp() public {
-        bytes memory code;
+        // At the time of writing, Foundry does not support contract compilation if one of the contracts involved uses an older version of Solidity.
+        // Hence, we deploy the contract using compiler generated creation code
 
-        code = vm.getDeployedCode("Fallout.sol");
-        address falloutAddress = address(64);
-        vm.etch(falloutAddress, code);
+        // Deploy FalloutFactory
+        bytes memory bytecode = abi.encodePacked(
+            vm.getCode("FalloutFactory.sol")
+        );
+        address falloutFactoryAddress;
+        // This is the address at which runtime code is set, which will be executed on the chain.
+        assembly {
+            falloutFactoryAddress := create(
+                0,
+                add(bytecode, 0x20),
+                mload(bytecode)
+            )
+        }
 
-        code = vm.getDeployedCode("FalloutFactory.sol");
-        address falloutFactoryAddress = address(164);
-        factory = IFalloutFactory(falloutFactoryAddress);
-        vm.etch(falloutFactoryAddress, code);
+        // Load FalloutFactory contract instance using interface
+        falloutFactory = FalloutFactory(falloutFactoryAddress);
 
-        fallout = IFallout(payable(factory.createInstance(attacker)));
+        // Deploy Fallout
+        bytecode = abi.encodePacked(vm.getCode("Fallout.sol"));
+        address falloutAddress;
+        assembly {
+            falloutAddress := create(0, add(bytecode, 0x20), mload(bytecode))
+        }
+
+        fallout = IFallout(payable(falloutFactory.createInstance(attacker)));
     }
 
     function testFalloutContract() external {
@@ -49,7 +55,7 @@ contract FalloutTest is Test {
         assertEq(newOwner, attacker, "New owner not set. Attack failed.");
 
         // Verify solution using Ethernaut validation
-        factory.validateInstance(payable(address(fallout)), attacker);
+        falloutFactory.validateInstance(payable(address(fallout)), attacker);
         vm.stopPrank();
     }
 }

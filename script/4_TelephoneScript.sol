@@ -3,13 +3,8 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
-import {TelephoneHack} from "src/test/TelephoneHack.sol";
-
-interface ITelephone {
-    function changeOwner(address) external;
-
-    function owner() external view returns (address);
-}
+import {TelephoneHack} from "src/hack/TelephoneHack.sol";
+import {ITelephone} from "src/hack/interfaces/ITelephone.sol";
 
 contract TelephoneScript is Script {
     event Owner(address);
@@ -20,6 +15,6 @@ contract TelephoneScript is Script {
         vm.startBroadcast(deployerKey);
         telephone.changeOwner(vm.envAddress("TESTNET_ADDRESS_1"));
         vm.stopBroadcast();
-        console.log("SUCCESS!!! Submit the instance.");
+        console2.log("SUCCESS!!! Submit the instance.");
     }
 }

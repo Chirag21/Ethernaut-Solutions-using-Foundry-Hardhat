@@ -72,7 +72,7 @@ contract FallbackTest is Test {
             address(level_1).balance
         );
 
-        // Verify solution using Ethernaut validation
+        // Verify the solution using Ethernaut's validation.
         success = factory.validateInstance(payable(level_1), attacker);
         assertTrue(success, "Validation Failed!!!");
 

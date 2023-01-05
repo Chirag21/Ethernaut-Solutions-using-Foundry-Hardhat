@@ -4,8 +4,8 @@ pragma solidity ^0.8.17;
 
 import "forge-std/Test.sol";
 import {Level as ReentranceFactory} from "src/levels/base/Level.sol";
-import {IReentrance} from "src/test/interfaces/IReentrance.sol";
-import {ReentranceHack} from "src/test/ReentranceHack.sol";
+import {IReentrance} from "src/hack/interfaces/IReentrance.sol";
+import {ReentranceHack} from "src/hack/ReentranceHack.sol";
 
 contract ReentranceTest is Test {
     ReentranceFactory private reentranceFactory;
@@ -51,14 +51,17 @@ contract ReentranceTest is Test {
         vm.deal(attacker, 1 ether);
         vm.startPrank(attacker);
 
-        console.log(
+        console2.log(
             "Reentrance Balance Before : ",
             address(reentrance).balance
         );
 
         reentranceHack.hack{value: INSERT_COIN}();
 
-        console.log("Reentrance Balance After : ", address(reentrance).balance);
+        console2.log(
+            "Reentrance Balance After : ",
+            address(reentrance).balance
+        );
 
         bool success = reentranceFactory.validateInstance(
             payable(address(reentrance)),

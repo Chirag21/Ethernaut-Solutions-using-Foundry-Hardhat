@@ -3,26 +3,13 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Test.sol";
-
-interface IToken {
-    function transfer(address, uint256) external returns (bool);
-
-    function balanceOf(address) external view returns (uint256);
-}
-
-interface ITokenFactory {
-    function createInstance(address _player) external payable returns (address);
-
-    function validateInstance(
-        address payable _instance,
-        address _player
-    ) external returns (bool);
-}
+import {IToken} from "src/hack/interfaces/IToken.sol";
+import {Level as TokenFactory} from "src/levels/base/Level.sol";
 
 contract TokenTest is Test {
-    uint constant playerSupply = 20;
+    uint private constant playerSupply = 20;
     IToken private token;
-    ITokenFactory private tokenFactory;
+    TokenFactory private tokenFactory;
     address private attacker = makeAddr("attacker");
 
     function setUp() external {
@@ -37,7 +24,7 @@ contract TokenTest is Test {
                 mload(bytecode)
             )
         }
-        tokenFactory = ITokenFactory(tokenFactoryAddress);
+        tokenFactory = TokenFactory(tokenFactoryAddress);
         token = IToken(tokenFactory.createInstance(attacker));
     }
 
@@ -50,7 +37,7 @@ contract TokenTest is Test {
         uint256 attackerBalance = token.balanceOf(attacker);
         assertGt(attackerBalance, playerSupply, "Test Failed!");
         tokenFactory.validateInstance(payable(address(token)), attacker);
-        console.log("Balance after hack :", attackerBalance);
+        console2.log("Balance after hack :", attackerBalance);
         vm.stopPrank();
     }
 }
