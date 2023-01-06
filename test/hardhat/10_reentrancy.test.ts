@@ -15,7 +15,7 @@ describe("Reentrance exploit", () => {
     // We cannot get the return value of the state-changing function off-chain.
     // Simulate on-chain execution of the createInstance() to get the return value (the address of the deployed instance).
     const reentranceAddress = await reentranceFactory
-      .connect(deployer)
+      .connect(attacker)
       .callStatic.createInstance(attacker.address, { value: INSERT_COIN });
 
     // Create a level instance
@@ -50,7 +50,7 @@ describe("Reentrance exploit", () => {
     expect(success).to.be.true;
 
     // Submit the instance
-    tx = await reentranceFactory.validateInstance(reentrance.address, attacker.address);
+    tx = await reentranceFactory.connect(attacker).validateInstance(reentrance.address, attacker.address);
     await tx.wait();
   });
 });

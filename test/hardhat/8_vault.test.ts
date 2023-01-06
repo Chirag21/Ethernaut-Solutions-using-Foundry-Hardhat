@@ -1,4 +1,3 @@
-import { AbiCoder } from "@ethersproject/abi";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
@@ -12,9 +11,9 @@ describe("Vault exploit", () => {
     const vaultFactory = await VaultFactory.connect(deployer).deploy();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
-    const vaultAddress = await vaultFactory.callStatic.createInstance(attacker.address);
+    const vaultAddress = await vaultFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
-    const tx = await vaultFactory.createInstance(attacker.address);
+    const tx = await vaultFactory.connect(attacker).createInstance(attacker.address);
     await tx.wait();
 
     // Load the instance at returned address
@@ -38,7 +37,7 @@ describe("Vault exploit", () => {
     expect(locked).to.be.false;
 
     // Validate the instance using Ethernaut validation.
-    const success = await vaultFactory.validateInstance(vault.address, attacker.address);
+    const success = await vaultFactory.connect(attacker).validateInstance(vault.address, attacker.address);
     expect(success).to.be.true;
   });
 });

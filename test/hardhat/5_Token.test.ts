@@ -11,9 +11,9 @@ describe("Token exploit", () => {
     const tokenFactory = await TokenFactory.connect(deployer).deploy();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
-    const tokenAddress = await tokenFactory.callStatic.createInstance(attacker.address);
+    const tokenAddress = await tokenFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
-    const tx = await tokenFactory.createInstance(attacker.address);
+    const tx = await tokenFactory.connect(attacker).createInstance(attacker.address);
     await tx.wait();
 
     // Load the instance at returned address
@@ -34,9 +34,9 @@ describe("Token exploit", () => {
 
     // Validate instance using Ethernaut validation
     // Simulate validateInstance to get return value
-    const success = await tokenFactory.callStatic.validateInstance(token.address, attacker.address);
+    const success = await tokenFactory.connect(attacker).callStatic.validateInstance(token.address, attacker.address);
 
-    //const success = await tokenFactory.validateInstance(token.address, attacker.address);
+    //const success = await tokenFactory.connect(attacker).validateInstance(token.address, attacker.address);
 
     expect(success).to.be.true;
   });

@@ -12,9 +12,9 @@ describe("CoinFlip exploit", () => {
     const coinFlipFactory = await CoinFlipFactory.connect(deployer).deploy();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
-    const coinFlipAddress = await coinFlipFactory.callStatic.createInstance(attacker.address);
+    const coinFlipAddress = await coinFlipFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
-    const tx = await coinFlipFactory.createInstance(attacker.address);
+    const tx = await coinFlipFactory.connect(attacker).createInstance(attacker.address);
     await tx.wait();
 
     // Load the instance at returned address
@@ -35,7 +35,7 @@ describe("CoinFlip exploit", () => {
     expect(await coinFlip.consecutiveWins()).to.be.equal("10", "Did not win consecutively");
 
     // Validate instance using Ethernaut validation
-    const success = await coinFlipFactory.validateInstance(coinFlip.address, attacker.address);
+    const success = await coinFlipFactory.connect(attacker).validateInstance(coinFlip.address, attacker.address);
     expect(success).to.be.true;
   });
 });

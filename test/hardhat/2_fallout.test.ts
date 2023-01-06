@@ -9,9 +9,9 @@ describe("Fallout exploit", () => {
     const falloutFactory = await FalloutFactory.connect(deployer).deploy();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
-    const falloutAddress = await falloutFactory.callStatic.createInstance(attacker.address);
+    const falloutAddress = await falloutFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
-    const tx = await falloutFactory.createInstance(attacker.address);
+    const tx = await falloutFactory.connect(attacker).createInstance(attacker.address);
     await tx.wait();
 
     // Load the instance at returned address
@@ -30,8 +30,14 @@ describe("Fallout exploit", () => {
     const newOwner = await fallout.connect(attacker).owner();
     expect(newOwner).to.equal(attacker.address, "New owner not set. Attack failed.");
 
-    // Validate instance using Ethernaut validation
-    const success = await falloutFactory.validateInstance(fallout.address, attacker.address);
+    // Simulate Ethernaut's instance validation to get return value
+    const success = await falloutFactory
+      .connect(attacker)
+      .callStatic.validateInstance(fallout.address, attacker.address);
     expect(success).to.be.true;
+
+    // Validate instance using Ethernaut's validation
+    const tx = await falloutFactory.connect(attacker).validateInstance(fallout.address, attacker.address);
+    await tx.wait();
   });
 });

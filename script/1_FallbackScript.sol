@@ -3,7 +3,7 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
-import "src/levels/Fallback.sol";
+import {Fallback} from "src/levels/Fallback.sol";
 
 contract HackFallbackScript is Script {
     error FallbackScript_CallFailed();

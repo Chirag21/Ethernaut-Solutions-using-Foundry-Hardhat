@@ -10,9 +10,9 @@ describe("Telephone exploit", () => {
     const telephoneFactory = await TelephoneFactory.connect(deployer).deploy();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
-    const telephoneAddress = await telephoneFactory.callStatic.createInstance(attacker.address);
+    const telephoneAddress = await telephoneFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
-    const tx = await telephoneFactory.createInstance(attacker.address);
+    const tx = await telephoneFactory.connect(attacker).createInstance(attacker.address);
     await tx.wait();
 
     // Load the instance at returned address
@@ -36,7 +36,7 @@ describe("Telephone exploit", () => {
     expect(attacker.address).to.be.equal(ownerAfterHack, "The New Owner Is Not Set ");
 
     // Validate instance using Ethernaut validation
-    const success = await telephoneFactory.validateInstance(telephone.address, attacker.address);
+    const success = await telephoneFactory.connect(attacker).validateInstance(telephone.address, attacker.address);
     expect(success).to.be.true;
   });
 });

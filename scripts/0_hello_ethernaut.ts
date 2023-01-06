@@ -1,4 +1,4 @@
-import hre, { ethers } from "hardhat";
+import { ethers } from "hardhat";
 import { BLOCK_EXPLORER_URL, developmentNetworks } from "../hardhat.config";
 
 async function helloEthernaut() {

@@ -8,9 +8,9 @@ describe("Delegation exploit", () => {
     const forceFactory = await ForceFactory.connect(deployer).deploy();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
-    const forceFactoryAddress = await forceFactory.callStatic.createInstance(attacker.address);
+    const forceFactoryAddress = await forceFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
-    const tx = await forceFactory.createInstance(attacker.address);
+    const tx = await forceFactory.connect(attacker).createInstance(attacker.address);
     await tx.wait();
 
     // Load the instance at returned address
@@ -25,7 +25,7 @@ describe("Delegation exploit", () => {
     });
 
     // Validate the instance using Ethernaut validation.
-    const success = await forceFactory.validateInstance(force.address, attacker.address);
+    const success = await forceFactory.connect(attacker).validateInstance(force.address, attacker.address);
     expect(success).to.be.true;
 
     // Assert Force's contract balance is greater than zero.

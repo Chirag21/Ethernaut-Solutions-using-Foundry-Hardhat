@@ -9,10 +9,6 @@ import {KingHack} from "src/hack/KingHack.sol";
 contract KingScript is Script {
     uint256 private constant INSERT_COIN = 0.001 ether;
 
-    // Error:
-    //     (code: -32000, message: insufficient funds for gas * price + value, data: None)
-    // Estimated total gas used for script: 208485
-    // Estimated amount required: 0.00062545500625455 ETH
     function run() external {
         address kingContractAddress = vm.envAddress("KING_ADDRESS");
         King king = King(payable(kingContractAddress));
