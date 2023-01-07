@@ -10,6 +10,7 @@ describe("CoinFlip exploit", () => {
     const [deployer, attacker] = await ethers.getSigners();
     const CoinFlipFactory = await ethers.getContractFactory("CoinFlipFactory");
     const coinFlipFactory = await CoinFlipFactory.connect(deployer).deploy();
+    await coinFlipFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const coinFlipAddress = await coinFlipFactory.connect(attacker).callStatic.createInstance(attacker.address);

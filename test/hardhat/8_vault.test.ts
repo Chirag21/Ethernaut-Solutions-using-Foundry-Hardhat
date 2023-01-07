@@ -9,6 +9,7 @@ describe("Vault exploit", () => {
     const [deployer, attacker] = await ethers.getSigners();
     const VaultFactory = await ethers.getContractFactory("VaultFactory");
     const vaultFactory = await VaultFactory.connect(deployer).deploy();
+    await vaultFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const vaultAddress = await vaultFactory.connect(attacker).callStatic.createInstance(attacker.address);

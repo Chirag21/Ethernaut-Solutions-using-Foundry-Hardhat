@@ -7,6 +7,7 @@ describe("Fallback exploit", () => {
     const [deployer, attacker] = await ethers.getSigners();
     const FallbackFactory = await ethers.getContractFactory("FallbackFactory");
     const fallbackFactory = await FallbackFactory.connect(deployer).deploy();
+    await fallbackFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const fallbackAddress = await fallbackFactory.connect(attacker).callStatic.createInstance(deployer.address);

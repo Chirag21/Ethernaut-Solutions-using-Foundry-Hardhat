@@ -11,6 +11,7 @@ describe("Reentrance exploit", () => {
     // Deploy factory contract
     const ReentranceFactory = await ethers.getContractFactory("ReentranceFactory");
     const reentranceFactory = await ReentranceFactory.connect(deployer).deploy();
+    await reentranceFactory.deployed();
 
     // We cannot get the return value of the state-changing function off-chain.
     // Simulate on-chain execution of the createInstance() to get the return value (the address of the deployed instance).
@@ -27,6 +28,7 @@ describe("Reentrance exploit", () => {
 
     const ReentranceHack = await ethers.getContractFactory("ReentranceHack");
     const reentranceHack = await ReentranceHack.connect(attacker).deploy(reentrance.address);
+    await reentranceHack.deployed();
 
     return { deployer, attacker, reentranceFactory, reentrance, reentranceHack };
   }
@@ -49,6 +51,7 @@ describe("Reentrance exploit", () => {
 
     expect(success).to.be.true;
 
+    // Validate the instance using Ethernaut validation.
     // Submit the instance
     tx = await reentranceFactory.connect(attacker).validateInstance(reentrance.address, attacker.address);
     await tx.wait();

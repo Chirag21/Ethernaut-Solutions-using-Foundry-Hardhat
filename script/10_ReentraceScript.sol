@@ -40,8 +40,7 @@ contract ReentranceScript is Script {
             address(reentrance).balance
         );
 
-        console2.log("SUCCESS!!! Submit the instance.");
-
         vm.stopBroadcast();
+        console2.log("SUCCESS!!! Submit the instance.");
     }
 }

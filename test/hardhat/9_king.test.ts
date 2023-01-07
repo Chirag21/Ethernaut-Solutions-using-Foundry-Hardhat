@@ -9,6 +9,7 @@ describe("King exploit", () => {
     const [deployer, attacker] = await ethers.getSigners();
     const KingFactory = await ethers.getContractFactory("KingFactory");
     const kingFactory = await KingFactory.connect(deployer).deploy();
+    await kingFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const kingAddress = await kingFactory
@@ -23,6 +24,7 @@ describe("King exploit", () => {
 
     const KingHack = await ethers.getContractFactory("KingHack");
     const kingHack = await KingHack.connect(deployer).deploy();
+    await kingHack.deployed();
     return { attacker, kingFactory, king, kingHack };
   }
 

@@ -9,6 +9,7 @@ describe("Delegation exploit", () => {
 
     const DelegationFactory = await ethers.getContractFactory("DelegationFactory");
     const delegationFactory = await DelegationFactory.connect(deployer).deploy();
+    await delegationFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const delegationAddress = await delegationFactory.connect(attacker).callStatic.createInstance(attacker.address);

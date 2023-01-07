@@ -20,7 +20,7 @@ ANVIL_PRIVATE_KEY_3=
 BLOCK_EXPLORER_URL=
 LOCALHOST=http://127.0.0.1:8545/
 
-# Address returned when you click get new instance
+# The address returned when you click "Get new instance" and the block number of the transaction for forking the chain on local.
 HELLO_ETHERNAUT_ADDRESS=
 #HELLO_ETHERNAUT_BLOCK_NUMBER=
 
@@ -52,4 +52,7 @@ KING_ADDRESS=
 #KING_BLOCK_NUMBER=
 
 REENTRANCE_ADDRESS=
+#BLOCK_NUMBER=
+
+ELEVATOR_ADDRESS=
 #BLOCK_NUMBER=

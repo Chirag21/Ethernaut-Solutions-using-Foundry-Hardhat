@@ -7,6 +7,7 @@ describe("Fallout exploit", () => {
     const [deployer, attacker] = await ethers.getSigners();
     const FalloutFactory = await ethers.getContractFactory("FalloutFactory");
     const falloutFactory = await FalloutFactory.connect(deployer).deploy();
+    await falloutFactory.deployed();
 
     // Simulate execution of createInstance to get return value of the function(address of deployed instance)
     const falloutAddress = await falloutFactory.connect(attacker).callStatic.createInstance(attacker.address);
