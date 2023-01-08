@@ -15,6 +15,7 @@ contract ElevatorHack is IBuilding {
 
     function isLastFloor(uint) external override returns (bool) {
         count++;
-        return count > 1;
+        if (count > 1) return true;
+        else return false;
     }
 }
