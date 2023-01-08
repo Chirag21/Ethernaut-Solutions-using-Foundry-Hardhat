@@ -18,7 +18,7 @@ contract DelegationTest is Test {
         delegation = Delegation(delegateAddress);
     }
 
-    function testDelegationHack() external {
+    function test_DelegationHack() external {
         vm.startPrank(attacker);
 
         (bool success, ) = address(delegation).call(

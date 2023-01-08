@@ -28,7 +28,7 @@ contract TokenTest is Test {
         token = IToken(tokenFactory.createInstance(attacker));
     }
 
-    function testTokenHack() external {
+    function test_TokenHack() external {
         vm.startPrank(attacker);
         address toAddress = makeAddr("toAddress");
 

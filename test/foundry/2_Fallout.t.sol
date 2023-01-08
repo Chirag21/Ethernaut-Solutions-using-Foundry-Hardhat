@@ -42,7 +42,7 @@ contract FalloutTest is Test {
         fallout = IFallout(payable(falloutFactory.createInstance(attacker)));
     }
 
-    function testFalloutContract() external {
+    function test_FalloutContract() external {
         vm.deal(attacker, 1 ether);
 
         vm.startPrank(attacker);

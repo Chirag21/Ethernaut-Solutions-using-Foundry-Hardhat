@@ -15,8 +15,7 @@ contract ElevatorScript is Script {
         IElevator elevator = IElevator(elevatorAddress);
 
         // Get private key from .env file
-        //uint attackerKey = vm.envUint("TESTNET_PRIVATE_KEY_1");
-        uint attackerKey = vm.envUint("TESTNET_PRIVATE_KEY_2");
+        uint attackerKey = vm.envUint("TESTNET_PRIVATE_KEY_1");
 
         // Set attacker as the msg.sender for all subsequent transactions.
         vm.startBroadcast(attackerKey);

@@ -19,7 +19,7 @@ contract CoinFlipTest is Test {
         coinFlip = CoinFlip(factory.createInstance(attacker));
     }
 
-    function testCoinFlipHack() external {
+    function test_CoinFlipHack() external {
         vm.startPrank(attacker);
 
         for (uint256 i = 0; i < 10; i++) {

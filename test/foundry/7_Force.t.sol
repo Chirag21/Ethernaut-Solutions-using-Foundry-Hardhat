@@ -18,7 +18,7 @@ contract ForceTest is Test {
         forceAddress = forceFactory.createInstance(attacker);
     }
 
-    function testForceHack() external {
+    function test_ForceHack() external {
         // Deploy the ForceHack contract.
         // "selfdestruct" function in the constructor will send ether stored in the contract to the supplied address.
         new ForceHack{value: 1 wei}(payable(forceAddress));

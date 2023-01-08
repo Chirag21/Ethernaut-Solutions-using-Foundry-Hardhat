@@ -17,7 +17,7 @@ contract VaultTest is Test {
         vault = Vault(vaultAddress);
     }
 
-    function testVaultHack() external {
+    function test_VaultHack() external {
         // Password is stored at slot number 1. Get value st storage slot number 1
         bytes32 password = vm.load(address(vault), bytes32(uint256(1)));
 

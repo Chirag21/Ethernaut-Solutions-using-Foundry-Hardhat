@@ -18,7 +18,7 @@ contract FallbackTest is Test {
         level_1 = Fallback(payable(factory.createInstance(attacker)));
     }
 
-    function testDrainLevel_1Contract() public {
+    function test_DrainLevel_1Contract() public {
         // Add contribution from deployer
         level_1.contribute{value: 100 gwei}();
 

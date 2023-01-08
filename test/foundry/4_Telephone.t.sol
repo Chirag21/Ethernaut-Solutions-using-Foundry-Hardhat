@@ -20,7 +20,7 @@ contract TelephoneTest is Test {
         telephoneHack = new TelephoneHack(address(telephone));
     }
 
-    function testTelephoneHack() external {
+    function test_TelephoneHack() external {
         vm.startPrank(attacker);
         telephoneHack.changeOwner(attacker);
         address ownerAfterAttack = telephone.owner();

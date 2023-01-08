@@ -19,7 +19,7 @@ contract ElevatorTest is Test {
         elevator = Elevator(elevatorAddress);
     }
 
-    function testElevatorHack() external {
+    function test_ElevatorHack() external {
         console2.log("top : ", elevator.top());
 
         elevatorHack = new ElevatorHack();

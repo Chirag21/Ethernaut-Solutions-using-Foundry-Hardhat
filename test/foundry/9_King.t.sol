@@ -25,7 +25,7 @@ contract KingTest is Test {
         kingHack = new KingHack();
     }
 
-    function testKingHack() external {
+    function test_KingHack() external {
         // Fund attacker address with ether
         vm.deal(attacker, 1 ether);
 

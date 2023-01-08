@@ -47,7 +47,7 @@ contract ReentranceTest is Test {
         reentranceHack = new ReentranceHack(address(reentrance));
     }
 
-    function testReentranceHack() external {
+    function test_ReentranceHack() external {
         vm.deal(attacker, 1 ether);
         vm.startPrank(attacker);
 
