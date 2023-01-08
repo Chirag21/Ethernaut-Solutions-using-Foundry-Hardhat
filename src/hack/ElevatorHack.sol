@@ -6,7 +6,7 @@ import {IElevator} from "src/hack/interfaces/IElevator.sol";
 import {IBuilding} from "src/hack/interfaces/IBuilding.sol";
 
 contract ElevatorHack is IBuilding {
-    uint256 count;
+    uint256 private count;
 
     function hack(address _elevator) external {
         IElevator elevator = IElevator(_elevator);
