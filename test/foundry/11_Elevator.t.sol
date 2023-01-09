@@ -24,6 +24,7 @@ contract ElevatorTest is Test {
 
         elevatorHack = new ElevatorHack();
         elevatorHack.hack(address(elevator));
+
         bool success = elevatorFactory.validateInstance(
             payable(address(elevator)),
             attacker

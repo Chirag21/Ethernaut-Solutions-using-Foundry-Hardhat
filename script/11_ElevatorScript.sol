@@ -11,7 +11,7 @@ contract ElevatorScript is Script {
     function run() external {
         address elevatorAddress = vm.envAddress("ELEVATOR_ADDRESS");
 
-        // Load Reentrance contract instance using interface
+        // Load Elevator contract instance using interface
         IElevator elevator = IElevator(elevatorAddress);
 
         // Get private key from .env file
