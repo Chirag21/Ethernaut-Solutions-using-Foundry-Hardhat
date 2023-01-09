@@ -9,7 +9,8 @@ import {KingHack} from "src/hack/KingHack.sol";
 contract KingScript is Script {
     uint256 private constant INSERT_COIN = 0.001 ether;
 
-    function run() external {
+    // Returns KingHack contract address for testing the script
+    function run() external returns (address) {
         address kingContractAddress = vm.envAddress("KING_ADDRESS");
         King king = King(payable(kingContractAddress));
         uint256 attackerKey = vm.envUint("TESTNET_PRIVATE_KEY_1");
@@ -34,5 +35,8 @@ contract KingScript is Script {
         console2.log("King After Hack : ", king._king());
 
         console2.log("SUCCESS!!! Submit the instance.");
+
+        // For testing the script
+        return address(kingHack);
     }
 }
