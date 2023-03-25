@@ -22,7 +22,7 @@ contract CoinFlipTest is Test {
     function test_CoinFlipHack() external {
         vm.startPrank(attacker);
 
-        for (uint256 i = 0; i < 10; i++) {
+        for (uint256 i = 0; i < 10; ++i) {
             bool guess = computeGuess();
             coinFlip.flip(guess);
             vm.roll(block.number + 1);

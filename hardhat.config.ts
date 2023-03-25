@@ -1,11 +1,11 @@
 require("dotenv").config();
-import fs from "fs";
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
-import "hardhat-preprocessor";
-import "@openzeppelin/hardhat-upgrades";
 import "@nomicfoundation/hardhat-chai-matchers";
+import "@nomicfoundation/hardhat-toolbox";
+import "@openzeppelin/hardhat-upgrades";
+import fs from "fs";
 import "hardhat-contract-sizer";
+import "hardhat-preprocessor";
+import { HardhatUserConfig } from "hardhat/config";
 
 export const TESTNET_PRIVATE_KEY_1 = process.env.TESTNET_PRIVATE_KEY_1!;
 export const TESTNET_PRIVATE_KEY_2 = process.env.TESTNET_PRIVATE_KEY_2!;
@@ -108,6 +108,11 @@ const config: HardhatUserConfig = {
     },
   },
   defaultNetwork: "hardhat",
+
+  // Hardhat gas Reporter
+  gasReporter: {
+    enabled: process.env.REPORT_GAS ? true : false,
+  },
 };
 
 export default config;

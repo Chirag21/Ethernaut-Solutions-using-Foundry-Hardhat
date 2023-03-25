@@ -20,9 +20,9 @@ contract ElevatorScript is Script {
         // Set attacker as the msg.sender for all subsequent transactions.
         vm.startBroadcast(attackerKey);
 
-        console.log("Deploying ElevatorHack contract...");
+        console2.log("Deploying ElevatorHack contract...");
         ElevatorHack elevatorHack = new ElevatorHack();
-        console.log("Elevator Hack deployed.");
+        console2.log("Elevator Hack deployed.");
 
         console2.log("Performing hack...");
         elevatorHack.hack(address(elevator));

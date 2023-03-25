@@ -17,6 +17,8 @@ remapping = [
 via_ir = false
 fs_permissions = [{ access = "read", path = "./out"}]
 
+# Gas reports
+gas_reports = ["*"]
 
 [rpc_endpoints]
 localhost = '${LOCALHOST}'
