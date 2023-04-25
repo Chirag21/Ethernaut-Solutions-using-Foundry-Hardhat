@@ -23,4 +23,4 @@ gas_reports = ["*"]
 [rpc_endpoints]
 localhost = '${LOCALHOST}'
 mumbai = '${POLYGON_TESTNET_RPC_URL}'
-goerli = '${GOERLI_TESTNET_RPC_URL}'
+sepolia = '${SEPOLIA_TESTNET_RPC_URL}'
