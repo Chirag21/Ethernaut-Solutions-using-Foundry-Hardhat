@@ -32,7 +32,7 @@
     "@typechain/hardhat": "6.1.5",
     "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
-    "@types/node": "18.16.3",
+    "@types/node": "20.1.0",
     "chai": "^4.3.7",
     "dotenv": "^16.0.3",
     "ethereumjs-util": "^7.1.5",
