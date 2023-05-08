@@ -80,8 +80,8 @@ const config: HardhatUserConfig = {
       chainId: 1337,
       forking: {
         url: POLYGON_TESTNET_RPC_URL,
-        enabled: true,
-        blockNumber: 29385384,
+        enabled: false,
+        // blockNumber: ,
       },
       loggingEnabled: true,
     },

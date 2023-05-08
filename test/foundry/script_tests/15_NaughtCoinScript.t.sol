@@ -11,9 +11,7 @@ contract NaughtCoinScriptTest is Test {
         NaughtCoinScript naughtCoinScript = new NaughtCoinScript();
         naughtCoinScript.run();
 
-        address naughtCoinAddr = address(
-            uint160(vm.envUint("NAUGHT_COIN_ADDRESS"))
-        );
+        address naughtCoinAddr = vm.envAddress("NAUGHT_COIN_ADDRESS");
         NaughtCoin naughtCoin = NaughtCoin(naughtCoinAddr);
         address attacker = vm.addr(vm.envUint("TESTNET_PRIVATE_KEY_1"));
         assertEq(naughtCoin.balanceOf(attacker), 0, "Script Failed!!!");
