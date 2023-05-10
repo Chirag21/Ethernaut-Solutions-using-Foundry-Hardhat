@@ -1,6 +1,6 @@
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 describe("Telephone exploit", () => {
   async function deployTelephoneFixture() {
@@ -14,7 +14,7 @@ describe("Telephone exploit", () => {
     const telephoneAddress = await telephoneFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
     const tx = await telephoneFactory.connect(attacker).createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Load the instance at returned address
     const telephone = await ethers.getContractAt("Telephone", telephoneAddress);
@@ -30,7 +30,7 @@ describe("Telephone exploit", () => {
     const { attacker, telephone, telephoneFactory, telephoneHack } = await loadFixture(deployTelephoneFixture);
 
     const tx = await telephoneHack.connect(attacker).changeOwner(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     const ownerAfterHack = await telephone.owner();
 

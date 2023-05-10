@@ -1,7 +1,7 @@
-import { expect } from "chai";
-import { ethers } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { expect } from "chai";
 import { BigNumber } from "ethers";
+import { ethers } from "hardhat";
 
 const FACTOR = BigNumber.from("57896044618658097711785492504343953926634992332820282019728792003956564819968");
 
@@ -16,7 +16,7 @@ describe("CoinFlip exploit", () => {
     const coinFlipAddress = await coinFlipFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
     const tx = await coinFlipFactory.connect(attacker).createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Load the instance at returned address
     const coinFlip = await ethers.getContractAt("CoinFlip", coinFlipAddress);
@@ -30,7 +30,7 @@ describe("CoinFlip exploit", () => {
     for (let i = 0; i < 10; i++) {
       const guess = await computeGuess();
       const tx = await coinFlip.connect(attacker).flip(guess);
-      await tx.wait();
+      await tx.wait(1);
     }
 
     expect(await coinFlip.consecutiveWins()).to.be.equal("10", "Did not win consecutively");

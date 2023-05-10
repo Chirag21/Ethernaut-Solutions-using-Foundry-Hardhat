@@ -17,7 +17,7 @@ describe("King exploit", () => {
       .callStatic.createInstance(attacker.address, { value: INSERT_COIN });
 
     const tx = await kingFactory.connect(attacker).createInstance(attacker.address, { value: INSERT_COIN });
-    await tx.wait();
+    await tx.wait(1);
 
     // Load the instance at returned address
     const king = await ethers.getContractAt("King", kingAddress);
@@ -33,7 +33,7 @@ describe("King exploit", () => {
 
     // Perform hack. This causes the KingHack contract to assume kingship of the King contract.
     let tx = await kingHack.hack(king.address, { value: INSERT_COIN });
-    await tx.wait();
+    await tx.wait(1);
 
     const kingBeforeSubmit = await king._king();
 
@@ -44,7 +44,7 @@ describe("King exploit", () => {
     // Submit the instance
     // Since the KingHack contract does not have receive or payable fallback functions, level cannot reclaim kingship.
     tx = await kingFactory.connect(attacker).validateInstance(king.address, attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     const kingAfterSubmit = await king._king();
 

@@ -19,7 +19,7 @@ describe("Gatekeeper Two Exploit", () => {
 
     // Create Instance
     const tx = await gatekeeperTwoFactory.connect(attacker).createInstance(attackerAddress);
-    await tx.wait();
+    await tx.wait(1);
 
     // Get deployed instance of GatekeeperTwo contract
     const gatekeeperTwo = await ethers.getContractAt("GatekeeperTwo", gateKeeperTwoAddress);

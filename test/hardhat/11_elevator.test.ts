@@ -17,7 +17,7 @@ describe("Elevator exploit", () => {
 
     // Create a level instance
     const tx = await elevatorFactory.createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Get deployed instance of Elevator contract
     const elevator = await ethers.getContractAt("Elevator", elevatorAddress);
@@ -34,7 +34,7 @@ describe("Elevator exploit", () => {
     await elevatorHack.deployed();
 
     const tx = await elevatorHack.connect(attacker).hack(elevator.address);
-    await tx.wait();
+    await tx.wait(1);
 
     const top = await elevator.top();
     expect(top).to.be.true;

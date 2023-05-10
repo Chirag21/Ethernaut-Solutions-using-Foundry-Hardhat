@@ -12,7 +12,7 @@ describe("Delegation exploit", () => {
     const forceFactoryAddress = await forceFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
     const tx = await forceFactory.connect(attacker).createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Load the instance at returned address
     const force = await ethers.getContractAt("Force", forceFactoryAddress);

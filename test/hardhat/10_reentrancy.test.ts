@@ -21,7 +21,7 @@ describe("Reentrance exploit", () => {
 
     // Create a level instance
     const tx = await reentranceFactory.connect(attacker).createInstance(attacker.address, { value: INSERT_COIN });
-    await tx.wait();
+    await tx.wait(1);
 
     // Get deployed instance of Reentrance contract
     const reentrance = await ethers.getContractAt("Reentrance", reentranceAddress);
@@ -40,7 +40,7 @@ describe("Reentrance exploit", () => {
     console.log(" Reentrance Balance Before Hack : ", await ethers.provider.getBalance(reentrance.address));
 
     let tx = await reentranceHack.connect(attacker).hack({ value: INSERT_COIN });
-    await tx.wait();
+    await tx.wait(1);
 
     console.log(" Reentrance Balance After Hack : ", await ethers.provider.getBalance(reentrance.address));
 
@@ -54,6 +54,6 @@ describe("Reentrance exploit", () => {
     // Validate the instance using Ethernaut validation.
     // Submit the instance
     tx = await reentranceFactory.connect(attacker).validateInstance(reentrance.address, attacker.address);
-    await tx.wait();
+    await tx.wait(1);
   });
 });

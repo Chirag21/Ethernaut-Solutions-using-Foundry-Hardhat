@@ -1,6 +1,6 @@
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 describe("Fallout exploit", () => {
   async function deployFalloutFixture() {
@@ -13,7 +13,7 @@ describe("Fallout exploit", () => {
     const falloutAddress = await falloutFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
     const tx = await falloutFactory.connect(attacker).createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Load the instance at returned address
     const fallout = await ethers.getContractAt("Fallout", falloutAddress);
@@ -39,6 +39,6 @@ describe("Fallout exploit", () => {
 
     // Validate instance using Ethernaut's validation
     const tx = await falloutFactory.connect(attacker).validateInstance(fallout.address, attacker.address);
-    await tx.wait();
+    await tx.wait(1);
   });
 });

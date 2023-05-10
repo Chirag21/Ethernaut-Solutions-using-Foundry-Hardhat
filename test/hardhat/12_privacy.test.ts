@@ -17,7 +17,7 @@ describe("Privacy exploit", () => {
 
     // Create a level instance
     const tx = await factory.createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Get deployed instance of Elevator contract
     const privacy = await ethers.getContractAt("Privacy", privacyAddress);
@@ -33,7 +33,7 @@ describe("Privacy exploit", () => {
     const key = data.slice(0, 34);
 
     const tx = await privacy.unlock(key);
-    await tx.wait();
+    await tx.wait(1);
 
     const locked = await privacy.locked();
     expect(locked).to.be.false;

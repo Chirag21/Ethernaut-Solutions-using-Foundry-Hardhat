@@ -18,7 +18,7 @@ describe("GatekeeperOne exploit", () => {
 
     // Create a level instance
     const tx = await gatekeeperOneFactory.createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Get deployed instance of Elevator contract
     const gatekeeperOne = await ethers.getContractAt("GatekeeperOne", gateKeeperOneAddress);
@@ -36,7 +36,7 @@ describe("GatekeeperOne exploit", () => {
     );
 
     const tx = await gatekeeperOneHack.connect(attacker).hack(gatekeeperOne.address);
-    await tx.wait();
+    await tx.wait(1);
 
     const entrant = await gatekeeperOne.entrant();
     const attackerAddress = await attacker.getAddress();

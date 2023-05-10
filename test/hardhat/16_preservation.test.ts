@@ -13,8 +13,9 @@ describe("Preservation Hack", () => {
     // Simulate on-chain execution of the createInstance() to get the return value (the address of the deployed instance).
     const preservationAddress = await factory.connect(attacker).callStatic.createInstance(attacker.getAddress());
 
+    // Deploy instance of level
     const tx = await factory.connect(attacker).createInstance(attacker.getAddress());
-    await tx.wait();
+    await tx.wait(1);
 
     // Get deployed instance of GatekeeperTwo contract
     const preservation = await ethers.getContractAt("Preservation", preservationAddress);
@@ -31,7 +32,7 @@ describe("Preservation Hack", () => {
     await preservationHack.deployed();
 
     const tx = await preservationHack.connect(attacker).hack(preservation.address);
-    await tx.wait();
+    await tx.wait(1);
 
     expect(await preservation.owner()).to.be.eq(attackerAddr, "Hack Failed!!!");
 

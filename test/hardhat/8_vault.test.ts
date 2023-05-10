@@ -15,7 +15,7 @@ describe("Vault exploit", () => {
     const vaultAddress = await vaultFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
     const tx = await vaultFactory.connect(attacker).createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Load the instance at returned address
     const vault = await ethers.getContractAt("Vault", vaultAddress);
@@ -30,7 +30,7 @@ describe("Vault exploit", () => {
 
     // Unlock the vault using password
     const tx = await vault.unlock(password!);
-    await tx.wait();
+    await tx.wait(1);
 
     // test
     // Assert that 'locked' is set to false

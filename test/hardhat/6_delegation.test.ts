@@ -15,7 +15,7 @@ describe("Delegation exploit", () => {
     const delegationAddress = await delegationFactory.connect(attacker).callStatic.createInstance(attacker.address);
 
     const tx = await delegationFactory.connect(attacker).createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     const delegation = await ethers.getContractAt("Delegation", delegationAddress);
 
@@ -41,7 +41,7 @@ describe("Delegation exploit", () => {
       data: selector,
     });
 
-    await tx.wait();
+    await tx.wait(1);
 
     const newOwner = await delegation.owner();
 

