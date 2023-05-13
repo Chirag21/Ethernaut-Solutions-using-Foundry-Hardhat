@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.17;
+pragma solidity ^0.8.17;
 
 import {IElevator} from "src/hack/interfaces/IElevator.sol";
 import {IBuilding} from "src/hack/interfaces/IBuilding.sol";

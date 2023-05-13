@@ -4,7 +4,7 @@ import "forge-std/Test.sol";
 import {CoinFlip} from "src/levels/CoinFlip.sol";
 import {CoinFlipFactory} from "src/levels/CoinFlipFactory.sol";
 
-pragma solidity 0.8.17;
+pragma solidity ^0.8.17;
 
 contract CoinFlipTest is Test {
     CoinFlip private coinFlip;
