@@ -1,4 +1,4 @@
 {
   "cSpell.words": ["COINFLIP", "hexlify", "Sighash", "Swappable"],
-  "dotenv.enableAutocloaking": true
+  "dotenv.enableAutocloaking": false
 }

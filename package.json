@@ -39,7 +39,7 @@
     "ethereumjs-util": "^7.1.5",
     "ethers": "5.7.2",
     "hardhat": "2.14.0",
-    "hardhat-contract-sizer": "^2.8.0",
+    "hardhat-contract-sizer": "^2.9.0",
     "hardhat-gas-reporter": "^1.0.9",
     "hardhat-preprocessor": "^0.1.5",
     "node@18.14.0": "link:types/node@18.14.0",

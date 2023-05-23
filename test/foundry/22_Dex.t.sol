@@ -16,7 +16,6 @@ interface IToken {
 contract DexTest is Test {
     error HackFailed();
 
-    uint public num;
     DexFactory private factory;
     Dex private dex;
     address private attacker;
@@ -47,7 +46,6 @@ contract DexTest is Test {
 
         vm.startPrank(attacker, attacker);
 
-        // Allow maximum number of amount for dex
         tokenOne.approve(attacker, address(dex), 500);
         tokenTwo.approve(attacker, address(dex), 500);
 
