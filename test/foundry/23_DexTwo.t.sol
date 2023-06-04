@@ -57,7 +57,7 @@ contract DexTwoTest is Test {
             payable(address(dexTwo)),
             attacker
         );
-        assertTrue(success, "SUCCESS!!! Validate the instance.");
+        assertTrue(success, "Failed To Validate The Instance");
 
         vm.stopPrank();
     }

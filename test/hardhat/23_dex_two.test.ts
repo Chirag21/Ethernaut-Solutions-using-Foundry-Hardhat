@@ -64,6 +64,6 @@ describe("DexTwo Hack", async () => {
     expect(tokenOneBalanceAfterHack.eq(0) && tokenTwoBalanceAfterHack.eq(0)).to.be.equal(true, "Hack Failed!!!");
 
     const success = await factory.validateInstance(dexTwo.address, attackerAddress);
-    expect(success).to.be.equal(true, "SUCCESS!!! Validate the instance.");
+    expect(success).to.be.equal(true, "Failed To Validate The Instance");
   });
 });

@@ -5,16 +5,17 @@ import { ethers } from "hardhat";
 describe("Preservation Hack", () => {
   async function deployPreservationFixture() {
     const [attacker] = await ethers.getSigners();
+    const attackerAddress = await attacker.getAddress();
     const PreservationFactory = await ethers.getContractFactory("PreservationFactory");
     const factory = await PreservationFactory.deploy();
     await factory.deployed();
 
     // We cannot get the return value of the state-changing function off-chain.
     // Simulate on-chain execution of the createInstance() to get the return value (the address of the deployed instance).
-    const preservationAddress = await factory.connect(attacker).callStatic.createInstance(attacker.getAddress());
+    const preservationAddress = await factory.connect(attacker).callStatic.createInstance(attackerAddress);
 
     // Deploy instance of level
-    const tx = await factory.connect(attacker).createInstance(attacker.getAddress());
+    const tx = await factory.connect(attacker).createInstance(attackerAddress);
     await tx.wait(1);
 
     // Get deployed instance of GatekeeperTwo contract
